@@ -302,7 +302,7 @@ async function outputScanResults(vulnerabilities: any[]) {
     if (!workspaceFolders) return;
     
     const workspaceRoot = workspaceFolders[0].uri.fsPath;
-    const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+    const workspaceName = workspaceRoot.split(/[\\/]/).pop() || 'Unknown Project';
     
     // Terminal output
     const outputChannel = vscode.window.createOutputChannel('VibeWolf Security Scanner');
@@ -313,7 +313,7 @@ async function outputScanResults(vulnerabilities: any[]) {
     outputChannel.appendLine('🐺 VIBEWOLF SECURITY SCANNER RESULTS');
     outputChannel.appendLine('🐺 ==========================================');
     outputChannel.appendLine(`📅 Scan Date: ${new Date().toLocaleString()}`);
-    outputChannel.appendLine(`📁 Workspace: ${workspaceRoot}`);
+    outputChannel.appendLine(`📁 Project: ${workspaceName}`);
     outputChannel.appendLine(`🔍 Total Vulnerabilities Found: ${vulnerabilities.length}`);
     outputChannel.appendLine('');
     
@@ -342,7 +342,7 @@ async function outputScanResults(vulnerabilities: any[]) {
             outputChannel.appendLine(''.padEnd(50, '-'));
             
             vulns.forEach((vuln, index) => {
-                const relativePath = vuln.filePath.replace(workspaceRoot, '').replace(/\\\\/g, '/');
+                const relativePath = vuln.filePath.replace(workspaceRoot, '').replace(/\\/g, '/').replace(/^\//, '');
                 outputChannel.appendLine(`${index + 1}. ${relativePath}:${vuln.lineNumber}`);
                 outputChannel.appendLine(`   Type: ${vuln.vulnerabilityType}`);
                 outputChannel.appendLine(`   Issue: ${vuln.description}`);
@@ -353,43 +353,95 @@ async function outputScanResults(vulnerabilities: any[]) {
         }
     });
     
-    // Create markdown file
+    // Create beautiful markdown file
     const fs = require('fs');
     const path = require('path');
     const reportPath = path.join(workspaceRoot, '!VIBEWOLF-SECURITY-REPORT.md');
     
-    let markdownContent = `# 🐺 VibeWolf Security Scanner Results\n\n`;
-    markdownContent += `**Scan Date:** ${new Date().toLocaleString()}\n`;
-    markdownContent += `**Workspace:** ${workspaceRoot}\n`;
-    markdownContent += `**Total Vulnerabilities:** ${vulnerabilities.length}\n\n`;
+    let markdownContent = `# 🐺 VibeWolf Security Report\n\n`;
+    markdownContent += `> **Project:** ${workspaceName}  \n`;
+    markdownContent += `> **Scan Date:** ${new Date().toLocaleString()}  \n`;
+    markdownContent += `> **Guardian Wolf Status:** ${vulnerabilities.length === 0 ? '✅ All Clear!' : `🛡️ ${vulnerabilities.length} Issues Found`}\n\n`;
     
-    markdownContent += `## 📊 Severity Breakdown\n\n`;
-    markdownContent += `- 🔴 **CRITICAL:** ${bySeverity.CRITICAL.length}\n`;
-    markdownContent += `- 🟠 **HIGH:** ${bySeverity.HIGH.length}\n`;
-    markdownContent += `- 🟡 **MEDIUM:** ${bySeverity.MEDIUM.length}\n`;
-    markdownContent += `- 🔵 **LOW:** ${bySeverity.LOW.length}\n\n`;
+    if (vulnerabilities.length === 0) {
+        markdownContent += `## 🎉 Excellent! No Security Issues Found\n\n`;
+        markdownContent += `Your code is secure and ready for deployment! The Guardian Wolf found no vulnerabilities.\n\n`;
+        markdownContent += `### 🚀 Next Steps:\n`;
+        markdownContent += `- ✅ Your app is ready for backend migration\n`;
+        markdownContent += `- ✅ Safe to deploy to app stores\n`;
+        markdownContent += `- ✅ No security concerns detected\n\n`;
+    } else {
+        // Beautiful severity summary with progress bars
+        markdownContent += `## 📊 Security Overview\n\n`;
+        markdownContent += `| Severity | Count | Status |\n`;
+        markdownContent += `|----------|-------|--------|\n`;
+        markdownContent += `| 🔴 Critical | ${bySeverity.CRITICAL.length} | ${bySeverity.CRITICAL.length > 0 ? '⚠️ Immediate Action Required' : '✅ Clear'} |\n`;
+        markdownContent += `| 🟠 High | ${bySeverity.HIGH.length} | ${bySeverity.HIGH.length > 0 ? '🔧 Fix Before Deployment' : '✅ Clear'} |\n`;
+        markdownContent += `| 🟡 Medium | ${bySeverity.MEDIUM.length} | ${bySeverity.MEDIUM.length > 0 ? '📋 Review Recommended' : '✅ Clear'} |\n`;
+        markdownContent += `| 🔵 Low | ${bySeverity.LOW.length} | ${bySeverity.LOW.length > 0 ? '💡 Consider Improving' : '✅ Clear'} |\n\n`;
+        
+        // Detailed findings with better formatting
+        ['CRITICAL', 'HIGH', 'MEDIUM', 'LOW'].forEach(severity => {
+            const vulns = bySeverity[severity as keyof typeof bySeverity];
+            if (vulns.length > 0) {
+                const emoji = severity === 'CRITICAL' ? '🔴' : severity === 'HIGH' ? '🟠' : severity === 'MEDIUM' ? '🟡' : '🔵';
+                const urgency = severity === 'CRITICAL' ? 'URGENT' : severity === 'HIGH' ? 'HIGH PRIORITY' : severity === 'MEDIUM' ? 'MODERATE' : 'LOW PRIORITY';
+                
+                markdownContent += `## ${emoji} ${severity} Issues (${vulns.length}) - ${urgency}\n\n`;
+                
+                vulns.forEach((vuln, index) => {
+                    const relativePath = vuln.filePath.replace(workspaceRoot, '').replace(/\\/g, '/').replace(/^\//, '');
+                    const fileName = relativePath.split('/').pop();
+                    const folderPath = relativePath.substring(0, relativePath.lastIndexOf('/'));
+                    
+                    markdownContent += `### ${index + 1}. ${fileName} ${severity === 'CRITICAL' ? '🚨' : severity === 'HIGH' ? '⚠️' : severity === 'MEDIUM' ? '⚡' : '💡'}\n\n`;
+                    markdownContent += `**📁 Location:** \`${folderPath ? folderPath + '/' : ''}${fileName}:${vuln.lineNumber}\`\n\n`;
+                    markdownContent += `**🔍 Issue Type:** ${vuln.vulnerabilityType.replace(/_/g, ' ').toUpperCase()}\n\n`;
+                    markdownContent += `**📝 Description:** ${vuln.description}\n\n`;
+                    
+                    markdownContent += `**💻 Code:**\n\`\`\`javascript\n${vuln.codeSnippet.trim()}\n\`\`\`\n\n`;
+                    
+                    markdownContent += `**🛠️ How to Fix:** ${vuln.recommendation}\n\n`;
+                    markdownContent += `**✅ Status:** [ ] Fixed\n\n`;
+                    
+                    if (index < vulns.length - 1) {
+                        markdownContent += `---\n\n`;
+                    }
+                });
+                markdownContent += `\n`;
+            }
+        });
+    }
     
-    // Detailed findings in markdown
-    ['CRITICAL', 'HIGH', 'MEDIUM', 'LOW'].forEach(severity => {
-        const vulns = bySeverity[severity as keyof typeof bySeverity];
-        if (vulns.length > 0) {
-            const emoji = severity === 'CRITICAL' ? '🔴' : severity === 'HIGH' ? '🟠' : severity === 'MEDIUM' ? '🟡' : '🔵';
-            markdownContent += `## ${emoji} ${severity} Vulnerabilities (${vulns.length})\n\n`;
-            
-            vulns.forEach((vuln, index) => {
-                const relativePath = vuln.filePath.replace(workspaceRoot, '').replace(/\\\\/g, '/');
-                markdownContent += `### ${index + 1}. \`${relativePath}:${vuln.lineNumber}\`\n\n`;
-                markdownContent += `**Type:** ${vuln.vulnerabilityType}\n`;
-                markdownContent += `**Issue:** ${vuln.description}\n\n`;
-                markdownContent += `**Code:**\n\`\`\`javascript\n${vuln.codeSnippet.trim()}\n\`\`\`\n\n`;
-                markdownContent += `**Recommendation:** ${vuln.recommendation}\n\n`;
-                markdownContent += `**Status:** [ ] Fixed\n\n`;
-                markdownContent += `---\n\n`;
-            });
-        }
-    });
+    markdownContent += `## 🎯 Action Plan\n\n`;
+    if (bySeverity.CRITICAL.length > 0) {
+        markdownContent += `### 🚨 IMMEDIATE (Critical Issues)\n`;
+        markdownContent += `1. **Stop deployment** - Critical security vulnerabilities found\n`;
+        markdownContent += `2. **Fix all critical issues** before proceeding\n`;
+        markdownContent += `3. **Re-scan** to verify fixes\n\n`;
+    }
+    if (bySeverity.HIGH.length > 0) {
+        markdownContent += `### ⚠️ HIGH PRIORITY (High Risk Issues)\n`;
+        markdownContent += `1. **Address before deployment** to app stores\n`;
+        markdownContent += `2. **Review security implications** carefully\n`;
+        markdownContent += `3. **Test fixes** thoroughly\n\n`;
+    }
+    if (bySeverity.MEDIUM.length > 0 || bySeverity.LOW.length > 0) {
+        markdownContent += `### 📋 RECOMMENDED (Medium/Low Issues)\n`;
+        markdownContent += `1. **Review and fix** when possible\n`;
+        markdownContent += `2. **Consider security best practices**\n`;
+        markdownContent += `3. **Document any intentional exceptions**\n\n`;
+    }
     
-    markdownContent += `## 🎯 Next Steps\n\n`;
+    markdownContent += `---\n\n`;
+    markdownContent += `## 🐺 About VibeWolf\n\n`;
+    markdownContent += `**VibeWolf Security Scanner** - The Guardian Wolf for Developers\n\n`;
+    markdownContent += `- 🎯 **83% Noise Reduction** - Only flags real security issues\n`;
+    markdownContent += `- 🎛️ **Interactive Management** - Right-click to manage issues\n`;
+    markdownContent += `- 📊 **Triple Output** - Visual + Terminal + This Report\n\n`;
+    markdownContent += `*"No developer should accidentally expose their secrets to the world."* 🛡️\n\n`;
+    markdownContent += `---\n\n`;
+    markdownContent += `**Generated by VibeWolf v1.0.0** | [Buy me a coffee](https://buymeacoffee.com/watsy) ☕\n`;
     markdownContent += `1. [ ] Review all CRITICAL vulnerabilities first\n`;
     markdownContent += `2. [ ] Fix HIGH severity issues before deployment\n`;
     markdownContent += `3. [ ] Address MEDIUM issues for production\n`;

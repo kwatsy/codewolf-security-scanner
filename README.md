@@ -51,6 +51,7 @@ VibeWolf protects "Vibe Code" developers and seasoned developers from the danger
 ### 📊 **Triple Output System:**
 - ✅ **Visual Problems panel** - Red/yellow squiggly lines with hover details
 - ✅ **Terminal output** - Professional VibeWolf-branded scan results
+- ✅ **Beautiful HTML reports** - Modern dark terminal theme with glassmorphism effects
 - ✅ **Markdown reports** - Auto-generated `!VIBEWOLF-SECURITY-REPORT.md`
 - ✅ **Top-visible files** - Reports appear at top of file explorer
 
@@ -59,6 +60,13 @@ VibeWolf protects "Vibe Code" developers and seasoned developers from the danger
 - ✅ **Severity filtering** - Show only HIGH/CRITICAL issues if desired
 - ✅ **Tech stack adaptation** - Configure for React, Vue, Angular, Node.js
 - ✅ **Team consistency** - Share configuration across development teams
+
+### 🎨 **Beautiful Dark Terminal Theme (v1.0.2):**
+- ✨ **Modern glassmorphism design** - Translucent backgrounds with blur effects
+- 🌟 **High contrast readability** - Bright text with glowing effects against dark backgrounds
+- 🎯 **Professional terminal aesthetic** - Clean, developer-friendly interface
+- 💫 **Enhanced branding** - Unified dark theme with cyan and green accents
+- 🔧 **Improved UX** - Better visual hierarchy and enhanced Buy Me A Coffee visibility
 
 ### **Command Palette:**
 - `🐺 VibeWolf: Scan Current File`
@@ -162,7 +170,7 @@ VibeWolf is your guardian wolf - always watching, always protecting, ensuring yo
 
 If VibeWolf has saved you from a security disaster or helped protect your app, consider buying me a coffee! ☕
 
-[![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20A%20Coffee-☕-yellow.svg)](https://buymeacoffee.com/watsy)
+[![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20A%20Coffee-☕-yellow.svg)](https://buymeacoffee.com/vibewolf)
 
 **Every coffee helps:**
 - 🐺 Keep VibeWolf updated with new vulnerability patterns

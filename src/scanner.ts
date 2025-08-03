@@ -116,34 +116,65 @@ export class SecurityScanner {
                 recommendation: 'Move all secrets to server-side, use environment variables, or secure credential management'
             },
 
-            // Firebase Security Issues
+            // Firebase Security Issues (Context-Aware Detection)
             firebase_security: {
                 patterns: [
+                    // Firebase Security Rules issues (CRITICAL)
                     'allow read, write: if true',
                     'allow.*if.*true',
-                    'functions\\.https\\.onRequest\\(\\s*\\(',
-                    'admin\\.initializeApp\\(\\).*apiKey',
-                    'firebase\\.initializeApp\\(.*apiKey.*\\)',
-                    'AIza[0-9A-Za-z\\-_]{35}'
+                    
+                    // Server-side Firebase keys in client code (CRITICAL)
+                    'admin\.initializeApp\(\).*apiKey',
+                    'firebase-admin.*apiKey',
+                    'serviceAccountKey',
+                    
+                    // Firebase web API keys (MEDIUM - context-aware)
+                    'apiKey:\s*["\']AIza[0-9A-Za-z\-_]{35}["\']',
+                    
+                    // Insecure Cloud Functions (HIGH)
+                    'functions\.https\.onRequest\\(',
+                    'cors.*origin.*\\*'
+                ],
+                severity: 'MEDIUM', // Changed from CRITICAL - Firebase web keys are designed to be public
+                description: 'Firebase configuration should use environment variables for better security practices',
+                recommendation: 'Move Firebase API key to environment variables (process.env.FIREBASE_API_KEY). Note: Firebase web API keys are designed to be public, but environment variables are best practice for key management and rotation.'
+            },
+            
+            // Firebase Critical Security Issues (separate rule for truly critical issues)
+            firebase_critical: {
+                patterns: [
+                    // Server-side keys that should NEVER be in client code
+                    'firebase-admin.*private_key',
+                    'serviceAccountKey.*private_key',
+                    'admin\.initializeApp\(.*private_key',
+                    
+                    // Dangerous Firebase Security Rules
+                    'allow read, write: if true',
+                    'allow.*if.*true.*firestore',
+                    'allow.*if.*request\.auth == null'
                 ],
                 severity: 'CRITICAL',
-                description: 'Insecure Firebase configuration detected',
-                recommendation: 'Implement proper authentication and security rules'
+                description: 'Critical Firebase security vulnerability - server credentials or insecure rules detected',
+                recommendation: 'IMMEDIATE ACTION: Remove server-side Firebase credentials from client code and implement proper Firebase Security Rules with authentication'
             },
 
-            // Unsafe eval() usage (refined to avoid Firebase function calls)
+            // Unsafe eval() usage (improved Firebase Functions exclusion)
             unsafe_eval: {
                 patterns: [
+                    // Actual dangerous eval patterns
                     '\\beval\\s*\\(',
                     '\\bnew\\s+Function\\s*\\(',
+                    
+                    // String-based setTimeout/setInterval (dangerous)
                     'setTimeout\\s*\\(\\s*["\'][^"\']',
                     'setInterval\\s*\\(\\s*["\'][^"\']',
-                    // Exclude Firebase function calls
-                    '(?<!\\w)Function\\s*\\((?!.*Function\\s*\\(\\s*\\{)'
+                    
+                    // Generic Function constructor (simplified pattern)
+                    '\\bnew\\s+Function\\s*\\('
                 ],
                 severity: 'HIGH',
                 description: 'Unsafe code execution detected',
-                recommendation: 'Avoid eval() and string-based code execution'
+                recommendation: 'Avoid eval(), Function() constructor, and string-based code execution. Note: Firebase Functions calls like "await calculateProfileFunction()" are safe and excluded from this check.'
             },
 
             // Insecure HTTP requests
@@ -245,6 +276,7 @@ export class SecurityScanner {
             xss_vulnerabilities: true,
             exposed_secrets: true,
             firebase_security: true,
+            firebase_critical: true,
             unsafe_eval: true,
             insecure_http: true,
             weak_crypto: true,
@@ -381,47 +413,404 @@ export class SecurityScanner {
             LOW: vulnerabilities.filter(v => v.severity === 'LOW').length
         };
 
+        const totalIssues = vulnerabilities.length;
+        const projectName = 'Your Project'; // Could be enhanced to get actual project name
+
         return `
         <!DOCTYPE html>
         <html>
         <head>
-            <title>Security Scan Report</title>
+            <title>🐺 VibeWolf Security Report</title>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <style>
-                body { font-family: Arial, sans-serif; margin: 20px; }
-                .summary { background: #f5f5f5; padding: 15px; border-radius: 5px; margin-bottom: 20px; }
-                .vulnerability { border-left: 4px solid #ccc; padding: 10px; margin: 10px 0; }
-                .critical { border-left-color: #dc3545; }
-                .high { border-left-color: #fd7e14; }
-                .medium { border-left-color: #ffc107; }
-                .low { border-left-color: #20c997; }
-                .code { background: #f8f9fa; padding: 5px; font-family: monospace; }
-                .file-group { margin: 20px 0; }
-                .file-title { font-weight: bold; color: #007bff; }
+                * {
+                    margin: 0;
+                    padding: 0;
+                    box-sizing: border-box;
+                }
+                
+                body {
+                    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+                    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                    min-height: 100vh;
+                    color: #333;
+                    line-height: 1.6;
+                }
+                
+                .container {
+                    max-width: 1200px;
+                    margin: 0 auto;
+                    padding: 20px;
+                }
+                
+                .header {
+                    background: rgba(0, 0, 0, 0.7);
+                    backdrop-filter: blur(20px);
+                    border: 1px solid rgba(255, 255, 255, 0.3);
+                    border-radius: 20px;
+                    padding: 30px;
+                    margin-bottom: 30px;
+                    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+                    text-align: center;
+                }
+                
+                .wolf-logo {
+                    font-size: 4rem;
+                    margin-bottom: 10px;
+                    animation: pulse 2s infinite;
+                    filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.5));
+                }
+                
+                @keyframes pulse {
+                    0%, 100% { transform: scale(1); }
+                    50% { transform: scale(1.1); }
+                }
+                
+                .header h1 {
+                    font-size: 2.5rem;
+                    margin-bottom: 10px;
+                    color: #ffffff;
+                    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+                }
+                
+                .header .subtitle {
+                    font-size: 1.2rem;
+                    color: #00ffff;
+                    margin-bottom: 20px;
+                    text-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
+                }
+                
+                .scan-info {
+                    display: flex;
+                    justify-content: center;
+                    gap: 30px;
+                    flex-wrap: wrap;
+                    margin-top: 20px;
+                }
+                
+                .scan-info-item {
+                    text-align: center;
+                }
+                
+                .scan-info-item .label {
+                    font-size: 0.9rem;
+                    color: rgba(255, 255, 255, 0.8);
+                    margin-bottom: 5px;
+                    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+                }
+                
+                .scan-info-item .value {
+                    font-size: 1.1rem;
+                    font-weight: bold;
+                    color: #ffffff;
+                    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+                }
+                
+                .terminal-output {
+                    background: rgba(0, 0, 0, 0.7);
+                    backdrop-filter: blur(20px);
+                    border: 1px solid rgba(255, 255, 255, 0.3);
+                    border-radius: 15px;
+                    padding: 30px;
+                    margin-bottom: 30px;
+                    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+                    font-family: 'Courier New', monospace;
+                }
+                
+                .terminal-header {
+                    color: #00ff00;
+                    font-weight: bold;
+                    margin: 5px 0;
+                    font-size: 1rem;
+                    text-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
+                }
+                
+                .scan-info-line {
+                    color: #ffffff;
+                    margin: 8px 0;
+                    font-size: 1rem;
+                    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+                }
+                
+                .severity-breakdown {
+                    margin: 20px 0;
+                }
+                
+                .breakdown-title {
+                    color: #00ffff;
+                    font-weight: bold;
+                    margin: 15px 0 10px 0;
+                    font-size: 1rem;
+                    text-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
+                }
+                
+                .severity-line {
+                    margin: 5px 0;
+                    font-size: 1rem;
+                    font-weight: bold;
+                }
+                
+                .severity-line.critical {
+                    color: #ff4444;
+                    text-shadow: 0 0 5px rgba(255, 68, 68, 0.7);
+                }
+                
+                .severity-line.high {
+                    color: #ff8800;
+                    text-shadow: 0 0 5px rgba(255, 136, 0, 0.7);
+                }
+                
+                .severity-line.medium {
+                    color: #ffdd00;
+                    text-shadow: 0 0 5px rgba(255, 221, 0, 0.7);
+                }
+                
+                .severity-line.low {
+                    color: #0088ff;
+                    text-shadow: 0 0 5px rgba(0, 136, 255, 0.7);
+                }
+                
+                .vulnerability-section {
+                    margin: 25px 0;
+                }
+                
+                .vuln-section-header {
+                    color: #ffffff;
+                    font-weight: bold;
+                    font-size: 1.1rem;
+                    margin: 15px 0 5px 0;
+                    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+                }
+                
+                .vuln-divider {
+                    color: rgba(255, 255, 255, 0.8);
+                    margin: 5px 0 15px 0;
+                }
+                
+                .vuln-item {
+                    margin: 15px 0;
+                    padding: 10px 0;
+                }
+                
+                .vuln-number {
+                    color: #ffffff;
+                    font-weight: bold;
+                    margin-bottom: 5px;
+                    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+                }
+                
+                .vuln-type {
+                    color: #00ff88;
+                    margin: 3px 0;
+                    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+                }
+                
+                .vuln-issue {
+                    color: #ffaa44;
+                    margin: 3px 0;
+                    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+                }
+                
+                .vuln-code-line {
+                    color: #dd88ff;
+                    margin: 3px 0;
+                    font-style: italic;
+                    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+                }
+                
+                .vuln-fix {
+                    color: #88ff88;
+                    margin: 3px 0;
+                    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+                }
+                
+                .terminal-footer {
+                    margin-top: 30px;
+                }
+                
+                .terminal-line {
+                    color: #ffffff;
+                    margin: 8px 0;
+                    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+                }
+                
+                .terminal-divider {
+                    color: #00ff00;
+                    font-weight: bold;
+                    margin: 10px 0;
+                    text-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
+                }
+                
+                .terminal-complete {
+                    color: #00ff00;
+                    font-weight: bold;
+                    margin: 10px 0;
+                    text-shadow: 0 0 8px rgba(0, 255, 0, 0.8);
+                }
+                
+                .terminal-success {
+                    color: #00ff00;
+                    font-weight: bold;
+                    font-size: 1.2rem;
+                    margin: 20px 0;
+                    text-shadow: 0 0 8px rgba(0, 255, 0, 0.8);
+                }
+                
+
+                
+                .footer {
+                    text-align: center;
+                    margin-top: 40px;
+                    padding: 30px;
+                    background: rgba(0, 0, 0, 0.7);
+                    backdrop-filter: blur(20px);
+                    border: 1px solid rgba(255, 255, 255, 0.3);
+                    border-radius: 20px;
+                    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+                }
+                
+                .footer .wolf-quote {
+                    font-style: italic;
+                    font-size: 1.1rem;
+                    color: #ffffff;
+                    margin-bottom: 15px;
+                    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+                }
+                
+                .footer .vibewolf-info {
+                    color: #ffffff;
+                    font-size: 0.9rem;
+                    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+                }
+                
+                .footer .vibewolf-info a {
+                    color: #00ffff !important;
+                    text-decoration: none !important;
+                    font-weight: bold;
+                    text-shadow: 0 0 5px rgba(0, 255, 255, 0.7);
+                    transition: all 0.3s ease;
+                }
+                
+                .footer .vibewolf-info a:hover {
+                    color: #88ffff !important;
+                    text-shadow: 0 0 8px rgba(0, 255, 255, 1);
+                }
+                
+                @media (max-width: 768px) {
+                    .container {
+                        padding: 10px;
+                    }
+                    
+                    .header {
+                        padding: 20px;
+                    }
+                    
+                    .header h1 {
+                        font-size: 2rem;
+                    }
+                    
+                    .scan-info {
+                        gap: 15px;
+                    }
+                    
+                    .overview-grid {
+                        grid-template-columns: 1fr;
+                    }
+                }
             </style>
         </head>
         <body>
-            <h1>🔍 Security Scan Report</h1>
-            <div class="summary">
-                <h2>Summary</h2>
-                <p>Total vulnerabilities: ${vulnerabilities.length}</p>
-                <p>🔴 Critical: ${severityCounts.CRITICAL}</p>
-                <p>🟠 High: ${severityCounts.HIGH}</p>
-                <p>🟡 Medium: ${severityCounts.MEDIUM}</p>
-                <p>🔵 Low: ${severityCounts.LOW}</p>
-            </div>
-            
-            ${this.groupVulnerabilitiesByFile(vulnerabilities).map(([file, vulns]) => `
-                <div class="file-group">
-                    <div class="file-title">📁 ${file}</div>
-                    ${vulns.map(vuln => `
-                        <div class="vulnerability ${vuln.severity.toLowerCase()}">
-                            <strong>Line ${vuln.lineNumber}:</strong> ${vuln.description}<br>
-                            <div class="code">${vuln.codeSnippet}</div>
-                            <small><strong>Fix:</strong> ${vuln.recommendation}</small>
+            <div class="container">
+                <div class="header">
+                    <div class="wolf-logo">🐺</div>
+                    <h1>VibeWolf Security Report</h1>
+                    <div class="subtitle">The Guardian Wolf for Developers</div>
+                    <div class="scan-info">
+                        <div class="scan-info-item">
+                            <div class="label">Project</div>
+                            <div class="value">${projectName}</div>
                         </div>
-                    `).join('')}
+                        <div class="scan-info-item">
+                            <div class="label">Scan Date</div>
+                            <div class="value">${new Date().toLocaleDateString()}</div>
+                        </div>
+                        <div class="scan-info-item">
+                            <div class="label">Total Issues</div>
+                            <div class="value">${totalIssues}</div>
+                        </div>
+                    </div>
                 </div>
-            `).join('')}
+                
+                <div class="terminal-output">
+                    <div class="terminal-header">🐺 ===============================================</div>
+                    <div class="terminal-header">🐺 VIBEWOLF SECURITY SCANNER RESULTS</div>
+                    <div class="terminal-header">🐺 ===============================================</div>
+                    
+                    <div class="scan-info-line">📅 Scan Date: ${new Date().toLocaleString()}</div>
+                    <div class="scan-info-line">📁 Project: Your Project</div>
+                    <div class="scan-info-line">🔍 Total Vulnerabilities Found: ${totalIssues}</div>
+                    
+                    <div class="severity-breakdown">
+                        <div class="breakdown-title">📊 SEVERITY BREAKDOWN:</div>
+                        <div class="severity-line critical">🔴 CRITICAL: ${severityCounts.CRITICAL}</div>
+                        <div class="severity-line high">🟠 HIGH: ${severityCounts.HIGH}</div>
+                        <div class="severity-line medium">🟡 MEDIUM: ${severityCounts.MEDIUM}</div>
+                        <div class="severity-line low">🔵 LOW: ${severityCounts.LOW}</div>
+                    </div>
+                    
+                    ${totalIssues === 0 ? `
+                        <div class="terminal-success">🎉 EXCELLENT! NO SECURITY ISSUES FOUND</div>
+                        <div class="terminal-line">✅ Your code is secure and ready for deployment!</div>
+                        <div class="terminal-line">🐺 The Guardian Wolf found no vulnerabilities.</div>
+                    ` : `
+                        ${['CRITICAL', 'HIGH', 'MEDIUM', 'LOW'].map(severity => {
+                            const vulns = vulnerabilities.filter(v => v.severity === severity);
+                            if (vulns.length === 0) return '';
+                            
+                            const emoji = severity === 'CRITICAL' ? '🔴' : severity === 'HIGH' ? '🟠' : severity === 'MEDIUM' ? '🟡' : '🔵';
+                            
+                            return `
+                                <div class="vulnerability-section">
+                                    <div class="vuln-section-header">${emoji} ${severity} VULNERABILITIES (${vulns.length}):</div>
+                                    <div class="vuln-divider">----------------------------------------------------</div>
+                                    ${vulns.map((vuln, index) => {
+                                        const fileName = vuln.filePath.split(/[\\\/]/).pop();
+                                        const lineNum = vuln.lineNumber;
+                                        
+                                        return `
+                                            <div class="vuln-item">
+                                                <div class="vuln-number">${index + 1}. ${fileName}:${lineNum}</div>
+                                                <div class="vuln-type">   Type: ${vuln.vulnerabilityType.replace(/_/g, ' ')}</div>
+                                                <div class="vuln-issue">   Issue: ${vuln.description}</div>
+                                                <div class="vuln-code-line">   Code: ${vuln.codeSnippet.trim()}</div>
+                                                <div class="vuln-fix">   Fix: ${vuln.recommendation}</div>
+                                            </div>
+                                        `;
+                                    }).join('')}
+                                </div>
+                            `;
+                        }).join('')}
+                        
+                        <div class="terminal-footer">
+                            <div class="terminal-line">📄 Detailed report saved to: !VIBEWOLF-SECURITY-REPORT.md</div>
+                            <div class="terminal-line">🔧 Use this file to track your security fixes!</div>
+                            <div class="terminal-divider">🐺 ===============================================</div>
+                            <div class="terminal-complete">✅ SCAN COMPLETE - STAY SECURE!</div>
+                            <div class="terminal-divider">🐺 ===============================================</div>
+                        </div>
+                    </div>
+                `}
+                
+                <div class="footer">
+                    <div class="wolf-quote">"No developer should accidentally expose their secrets to the world."</div>
+                    <div class="vibewolf-info">
+                        <strong>VibeWolf Security Scanner v1.0.0</strong><br>
+                        🎯 83% Noise Reduction • 🎛️ Interactive Management • 📊 Triple Output<br>
+                        <a href="https://buymeacoffee.com/vibewolf" style="color: #667eea; text-decoration: none;">☕ Buy me a coffee</a>
+                    </div>
+                </div>
+            </div>
         </body>
         </html>`;
     }

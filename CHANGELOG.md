@@ -1,5 +1,26 @@
 # 🐺 VibeWolf Security Scanner - Changelog
 
+## Version 1.0.2 - August 3, 2025
+
+### 🎨 **HTML Report UI Overhaul**
+
+#### ✨ **Beautiful Dark Terminal Theme**
+- **REDESIGNED**: Complete HTML report visual overhaul with unified dark theme
+- **ENHANCED**: High-contrast terminal-style output for perfect readability
+- **IMPROVED**: Glassmorphism design with dark backgrounds and bright text
+- **ADDED**: Glowing text effects and proper shadows for visibility against gradient
+- **FIXED**: Buy Me A Coffee link now prominently displayed with cyan glow
+- **RESULT**: Professional, readable security report that matches terminal output style
+
+#### 🎯 **Visual Consistency**
+- **UNIFIED**: Header, terminal content, and footer all use matching dark theme
+- **ENHANCED**: Wolf logo with glowing drop-shadow effect
+- **IMPROVED**: Cyan subtitle and accent colors throughout
+- **OPTIMIZED**: Text shadows and contrast for perfect readability
+- **POLISHED**: Consistent color scheme across all UI elements
+
+---
+
 ## Version 1.0.0 - August 3, 2025
 
 ### 🎉 **MAJOR BREAKTHROUGH: 83% Noise Reduction Achieved!**
