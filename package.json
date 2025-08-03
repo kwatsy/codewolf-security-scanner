@@ -1,0 +1,165 @@
+{
+  "name": "vibewolf-security-scanner",
+  "displayName": "🐺 VibeWolf Security Scanner",
+  "description": "🛡️ Protect your apps from dangerous security vulnerabilities - The guardian wolf for new and seasoned developers",
+  "version": "1.0.2",
+  "publisher": "vibewolf",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/4wavelabs/vibewolf-security-scanner"
+  },
+  "bugs": {
+    "url": "https://github.com/4wavelabs/vibewolf-security-scanner/issues"
+  },
+  "homepage": "https://github.com/4wavelabs/vibewolf-security-scanner#readme",
+  "icon": "images/icon.png",
+  "engines": {
+    "vscode": "^1.74.0"
+  },
+  "categories": [
+    "Linters",
+    "Other"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "securityScanner.scanFile",
+        "title": "🐺 VibeWolf: Scan Current File"
+      },
+      {
+        "command": "securityScanner.scanWorkspace",
+        "title": "🐺 VibeWolf: Scan Entire Workspace"
+      },
+      {
+        "command": "securityScanner.scanFolder",
+        "title": "🐺 VibeWolf: Scan Selected Folder"
+      },
+      {
+        "command": "securityScanner.generateReport",
+        "title": "🐺 VibeWolf: Generate Security Report"
+      }
+    ],
+    "views": {
+      "explorer": [
+        {
+          "id": "securityScanner",
+          "name": "🐺 VibeWolf Security Issues",
+          "when": "securityScanner.hasIssues"
+        }
+      ]
+    },
+    "menus": {
+      "explorer/context": [
+        {
+          "command": "securityScanner.scanFolder",
+          "when": "explorerResourceIsFolder",
+          "group": "security"
+        }
+      ],
+      "editor/context": [
+        {
+          "command": "securityScanner.scanFile",
+          "group": "security"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Security Scanner",
+      "properties": {
+        "securityScanner.enableRealTime": {
+          "type": "boolean",
+          "default": false,
+          "description": "Enable real-time scanning as you type (disabled by default to avoid interrupting development workflow)"
+        },
+        "securityScanner.minSeverity": {
+          "type": "string",
+          "enum": [
+            "LOW",
+            "MEDIUM",
+            "HIGH",
+            "CRITICAL"
+          ],
+          "default": "MEDIUM",
+          "description": "Minimum severity level to display"
+        },
+        "securityScanner.vulnerabilityTypes": {
+          "type": "object",
+          "default": {
+            "xss_vulnerabilities": true,
+            "exposed_secrets": true,
+            "firebase_security": true,
+            "unsafe_eval": true,
+            "insecure_http": true,
+            "weak_crypto": true,
+            "sql_injection": true,
+            "cors_issues": true
+          },
+          "properties": {
+            "xss_vulnerabilities": {
+              "type": "boolean",
+              "description": "Detect XSS vulnerabilities (innerHTML, document.write)"
+            },
+            "exposed_secrets": {
+              "type": "boolean",
+              "description": "Detect hardcoded API keys, passwords, and credentials"
+            },
+            "firebase_security": {
+              "type": "boolean",
+              "description": "Detect insecure Firebase configurations"
+            },
+            "unsafe_eval": {
+              "type": "boolean",
+              "description": "Detect unsafe code execution (eval, Function constructor)"
+            },
+            "insecure_http": {
+              "type": "boolean",
+              "description": "Detect insecure HTTP requests (non-HTTPS)"
+            },
+            "weak_crypto": {
+              "type": "boolean",
+              "description": "Detect weak cryptographic algorithms (MD5, SHA1)"
+            },
+            "sql_injection": {
+              "type": "boolean",
+              "description": "Detect potential SQL injection vulnerabilities"
+            },
+            "cors_issues": {
+              "type": "boolean",
+              "description": "Detect insecure CORS configurations"
+            }
+          },
+          "description": "Configure which vulnerability types to scan for"
+        },
+        "securityScanner.excludePatterns": {
+          "type": "array",
+          "default": [
+            "node_modules/**",
+            "dist/**",
+            "build/**",
+            ".next/**",
+            "coverage/**"
+          ],
+          "description": "File patterns to exclude from scanning"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./"
+  },
+  "devDependencies": {
+    "@types/node": "16.x",
+    "@types/vscode": "^1.74.0",
+    "typescript": "^4.9.4"
+  },
+  "dependencies": {
+    "canvas": "^3.1.2"
+  }
+}
