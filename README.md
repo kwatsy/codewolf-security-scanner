@@ -170,7 +170,7 @@ VibeWolf is your guardian wolf - always watching, always protecting, ensuring yo
 
 If VibeWolf has saved you from a security disaster or helped protect your app, consider buying me a coffee! ☕
 
-[![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20A%20Coffee-☕-yellow.svg)](https://buymeacoffee.com/watsy)
+[![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20A%20Coffee-☕-yellow.svg)](https://buymeacoffee.com/vibewolf)
 
 **Every coffee helps:**
 - 🐺 Keep VibeWolf updated with new vulnerability patterns
