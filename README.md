@@ -1,10 +1,12 @@
 # 🐺 VibeWolf Security Scanner
 
-**The Guardian Wolf for Developers** 🛡️
+**The Guardian Wolf for "Vibe" Developers** 🛡️
 
 ## 🎆 **Mission**
 
-VibeWolf protects "Vibe Code" developers and seasoned developers from the dangerous implications of publishing apps with exposed APIs, hardcoded secrets, and security vulnerabilities to app stores. 
+Being a "Vibe Code Developer" myself I know the pitfalls of unprotected projects. 
+
+VibeWolf protects "Vibe Code Developers" and seasoned developers from the dangerous implications of publishing apps with exposed APIs, hardcoded secrets, and security vulnerabilities to app stores. 
 
 **VibeWolf is designed to be used BEFORE backend migration and app store deployment - not during active development!**
 
