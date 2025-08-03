@@ -1,12 +1,10 @@
 # 🐺 VibeWolf Security Scanner
 
-**The Guardian Wolf for "Vibe" Developers** 🛡️
+**The Guardian Wolf for Developers** 🛡️
 
 ## 🎆 **Mission**
 
-Being a "Vibe Code Developer" myself I know the pitfalls of unprotected projects. 
-
-VibeWolf protects "Vibe Code Developers" and seasoned developers from the dangerous implications of publishing apps with exposed APIs, hardcoded secrets, and security vulnerabilities to app stores. 
+VibeWolf protects "Vibe Code" developers and seasoned developers from the dangerous implications of publishing apps with exposed APIs, hardcoded secrets, and security vulnerabilities to app stores. 
 
 **VibeWolf is designed to be used BEFORE backend migration and app store deployment - not during active development!**
 
@@ -53,6 +51,7 @@ VibeWolf protects "Vibe Code Developers" and seasoned developers from the danger
 ### 📊 **Triple Output System:**
 - ✅ **Visual Problems panel** - Red/yellow squiggly lines with hover details
 - ✅ **Terminal output** - Professional VibeWolf-branded scan results
+- ✅ **Beautiful HTML reports** - Modern dark terminal theme with glassmorphism effects
 - ✅ **Markdown reports** - Auto-generated `!VIBEWOLF-SECURITY-REPORT.md`
 - ✅ **Top-visible files** - Reports appear at top of file explorer
 
@@ -62,6 +61,13 @@ VibeWolf protects "Vibe Code Developers" and seasoned developers from the danger
 - ✅ **Tech stack adaptation** - Configure for React, Vue, Angular, Node.js
 - ✅ **Team consistency** - Share configuration across development teams
 
+### 🎨 **Beautiful Dark Terminal Theme (v1.0.2):**
+- ✨ **Modern glassmorphism design** - Translucent backgrounds with blur effects
+- 🌟 **High contrast readability** - Bright text with glowing effects against dark backgrounds
+- 🎯 **Professional terminal aesthetic** - Clean, developer-friendly interface
+- 💫 **Enhanced branding** - Unified dark theme with cyan and green accents
+- 🔧 **Improved UX** - Better visual hierarchy and enhanced Buy Me A Coffee visibility
+
 ### **Command Palette:**
 - `🐺 VibeWolf: Scan Current File`
 - `🐺 VibeWolf: Scan Entire Workspace` 
@@ -69,8 +75,13 @@ VibeWolf protects "Vibe Code Developers" and seasoned developers from the danger
 - `🐺 VibeWolf: Generate Security Report`
 
 ### **Security Panel:**
-🐺 VibeWolf Security Issues (12) ├── 📁 src/components/Login.jsx (3) │ ├── 🔴 Line 23: Hardcoded API key detected │ ├── 🟠 Line 45: XSS vulnerability in innerHTML │ └── 🟡 Line 67: Insecure HTTP request
-
+```
+🐺 VibeWolf Security Issues (12)
+├── 📁 src/components/Login.jsx (3)
+│   ├── 🔴 Line 23: Hardcoded API key detected
+│   ├── 🟠 Line 45: XSS vulnerability in innerHTML
+│   └── 🟡 Line 67: Insecure HTTP request
+```
 
 ## 📊 **Perfect for:**
 
@@ -117,53 +128,67 @@ VibeWolf protects "Vibe Code Developers" and seasoned developers from the danger
 const firebaseConfig = {
   apiKey: "AIzaGxXxXxXxXxXxXxXxXxXxXxXxXxXxXxXxXxXx"
 };
-VibeWolf immediately warns:
+```
 
-🔴 Critical: Hardcoded secrets exposed in frontend code
-💡 Fix: Move secrets to server-side or use environment variables
-🎉 Success Stories
-Coffee Profile App Scan Results:
+**VibeWolf immediately warns:**
+- 🔴 **Critical:** Hardcoded secrets exposed in frontend code
+- 💡 **Fix:** Move secrets to server-side or use environment variables
 
-✅ Found 7 vulnerabilities (1 Critical, 3 High, 3 Medium)
-✅ Prevented Firebase API key exposure
-✅ Caught unsafe eval() usage in 3 files
-✅ Generated detailed HTML security report
-🔧 Installation
-Package the extension:
-bash
-npm install -g vsce
-vsce package
-Install in Windsurf:
-Open Windsurf
-Press Ctrl+Shift+P
-Type "Extensions: Install from VSIX"
-Select your .vsix file
-Start protecting your code! 🐺⚡
-🌟 The VibeWolf Promise
-"No developer should accidentally expose their secrets to the world."
+## 🎉 **Success Stories**
+
+**Coffee Profile App Scan Results:**
+- ✅ Found 7 vulnerabilities (1 Critical, 3 High, 3 Medium)
+- ✅ Prevented Firebase API key exposure
+- ✅ Caught unsafe `eval()` usage in 3 files
+- ✅ Generated detailed HTML security report
+
+## 🔧 **Installation**
+
+1. **Package the extension:**
+   ```bash
+   npm install -g vsce
+   vsce package
+   ```
+
+2. **Install in Windsurf:**
+   - Open Windsurf
+   - Press `Ctrl+Shift+P`
+   - Type "Extensions: Install from VSIX"
+   - Select your `.vsix` file
+
+3. **Start protecting your code!** 🐺⚡
+
+## 🌟 **The VibeWolf Promise**
+
+**"No developer should accidentally expose their secrets to the world."**
 
 VibeWolf is your guardian wolf - always watching, always protecting, ensuring your apps are secure before they reach millions of users.
 
-☕ Support VibeWolf
-VibeWolf is completely FREE and always will be! 🎉
+## ☕ **Support VibeWolf**
+
+**VibeWolf is completely FREE** and always will be! 🎉
 
 If VibeWolf has saved you from a security disaster or helped protect your app, consider buying me a coffee! ☕
 
-Buy Me A Coffee
+[![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20A%20Coffee-☕-yellow.svg)](https://buymeacoffee.com/watsy)
 
-Every coffee helps:
+**Every coffee helps:**
+- 🐺 Keep VibeWolf updated with new vulnerability patterns
+- 🛡️ Add support for more frameworks and languages  
+- ⚡ Improve scanning performance and accuracy
+- 📚 Create more security education content
 
-🐺 Keep VibeWolf updated with new vulnerability patterns
-🛡️ Add support for more frameworks and languages
-⚡ Improve scanning performance and accuracy
-📚 Create more security education content
-Your support keeps the guardian wolf strong! 🐺💪
+**Your support keeps the guardian wolf strong!** 🐺💪
 
-📜 License
-MIT License - Use VibeWolf freely in personal and commercial projects!
+---
 
-Built with ❤️ for the "Vibe Coder" Developer Community
-Protect. Secure. Ship with confidence. 🐺🛡️
+## 📜 **License**
 
-"No developer should accidentally expose their secrets to the world."
+**MIT License** - Use VibeWolf freely in personal and commercial projects!
 
+---
+
+**Built with ❤️ for the "Vibe Coder" Developer Community**  
+**Protect. Secure. Ship with confidence.** 🐺🛡️
+
+*"No developer should accidentally expose their secrets to the world."*
