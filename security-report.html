@@ -1,0 +1,79 @@
+
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>Security Scan Report</title>
+            <style>
+                body { font-family: Arial, sans-serif; margin: 20px; }
+                .summary { background: #f5f5f5; padding: 15px; border-radius: 5px; margin-bottom: 20px; }
+                .vulnerability { border-left: 4px solid #ccc; padding: 10px; margin: 10px 0; }
+                .critical { border-left-color: #dc3545; }
+                .high { border-left-color: #fd7e14; }
+                .medium { border-left-color: #ffc107; }
+                .low { border-left-color: #20c997; }
+                .code { background: #f8f9fa; padding: 5px; font-family: monospace; }
+                .file-group { margin: 20px 0; }
+                .file-title { font-weight: bold; color: #007bff; }
+            </style>
+        </head>
+        <body>
+            <h1>🔍 Security Scan Report</h1>
+            <div class="summary">
+                <h2>Summary</h2>
+                <p>Total vulnerabilities: 4</p>
+                <p>🔴 Critical: 1</p>
+                <p>🟠 High: 0</p>
+                <p>🟡 Medium: 3</p>
+                <p>🔵 Low: 0</p>
+                <p><strong>🎯 83% noise reduction achieved!</strong></p>
+            </div>
+            
+            
+                <div class="file-group">
+                    <div class="file-title">📁 src/components/MapComponent.js</div>
+                    
+                        <div class="vulnerability medium">
+                            <strong>Line 9:</strong> Insecure HTTP requests detected<br>
+                            <div class="code">url = `http://api.example.com/search?q=${query}`;</div>
+                            <small><strong>Fix:</strong> Use HTTPS for all external requests</small>
+                        </div>
+                    
+                </div>
+            
+                <div class="file-group">
+                    <div class="file-title">📁 src/components/LocationCard.js</div>
+                    
+                        <div class="vulnerability medium">
+                            <strong>Line 60:</strong> Insecure HTTP requests detected<br>
+                            <div class="code">url = `http://api.example.com/search?q=${query}`;</div>
+                            <small><strong>Fix:</strong> Use HTTPS for all external requests</small>
+                        </div>
+                    
+                </div>
+            
+                <div class="file-group">
+                    <div class="file-title">📁 src/components/SearchWidget.js</div>
+                    
+                        <div class="vulnerability medium">
+                            <strong>Line 50:</strong> Insecure HTTP requests detected<br>
+                            <div class="code">fetch(`http://api.example.com/search?q=${term}`);</div>
+                            <small><strong>Fix:</strong> Use HTTPS for all external requests</small>
+                        </div>
+                    
+                </div>
+            
+                <div class="file-group">
+                    <div class="file-title">📁 src/config/firebase.js</div>
+                    
+                        <div class="vulnerability critical">
+                            <strong>Line 8:</strong> Insecure Firebase configuration detected<br>
+                            <div class="code">apiKey: "AIzaGxXxXxXxXxXxXxXxXxXxXxXxXxXxXxXxXxXx",</div>
+                            <small><strong>Fix:</strong> Move secrets to environment variables</small>
+                        </div>
+                    
+                </div>
+
+
+            
+        </body>
+        </html>
