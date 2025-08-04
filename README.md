@@ -41,11 +41,19 @@ VibeWolf protects "Vibe Code" developers and seasoned developers from the danger
 - ✅ **Refined algorithms** - No more `userProfile`, `useState` false alarms
 - ✅ **Professional results** - From 23 false positives down to 4 real issues
 
+### 🤖 **AI Integration - Revolutionary "Send to Cascade" Feature:**
+- ✅ **Instant AI assistance** - Click "Send to Cascade" for any security issue
+- ✅ **Specific fix guidance** - Get targeted solutions for each vulnerability
+- ✅ **Seamless workflow** - From detection to AI-powered remediation in seconds
+- ✅ **Context-aware fixes** - AI understands your specific code and situation
+- ✅ **No manual research** - Skip Googling security fixes, get instant expert advice
+- ✅ **First-of-its-kind** - World's first security scanner with built-in AI remediation
+
 ### 🎛️ **Interactive Issue Management:**
 - ✅ **Right-click dropdowns** - Manage any VibeWolf issue directly in Problems tab
 - ✅ **Smart ignore options** - This instance, this file, or project-wide
 - ✅ **Whitelist patterns** - Add similar patterns to prevent future flags
-- ✅ **Detailed fix guides** - Step-by-step security remediation instructions
+- ✅ **Detailed fix guides** - Step-by-Step security remediation instructions
 - ✅ **False positive reporting** - Help improve VibeWolf detection
 
 ### 📊 **Triple Output System:**
@@ -116,9 +124,10 @@ VibeWolf protects "Vibe Code" developers and seasoned developers from the danger
 
 ### **🔴 App Store Preparation (Final Scan):**
 1. **Backend migration complete?** Final security check!
-2. **Generate security report** for compliance
-3. **Verify no secrets** remain in frontend code
-4. **Deploy with confidence** to app stores!
+2. **Use "Send to Cascade"** for AI-powered fix guidance on any remaining issues
+3. **Generate security report** for compliance
+4. **Verify no secrets** remain in frontend code
+5. **Deploy with confidence** to app stores!
 
 ## 🛡️ **Why VibeWolf Matters**
 
