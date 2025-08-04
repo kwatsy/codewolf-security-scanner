@@ -177,9 +177,9 @@ CodeWolf is your guardian wolf - always watching, always protecting, ensuring yo
 
 **CodeWolf is completely FREE** and always will be! 🎉
 
-If CodeWolf has saved you from a security disaster or helped protect your app, consider buying me a coffee! ☕
+If CodeWolf has saved you from a security disaster or helped protect your app, consider supporting the project! ☕
 
-[![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20A%20Coffee-☕-yellow.svg)](https://buymeacoffee.com/c0dewolf)
+[![Ko-fi](https://img.shields.io/badge/Ko--fi-☕-orange.svg)](https://ko-fi.com/watsy)
 
 **Every coffee helps:**
 - 🐺 Keep CodeWolf updated with new vulnerability patterns

@@ -1,7 +1,7 @@
-# 🐺 CodeWolf Security Report
+# 🐺 VibeWolf Security Report
 
 > **Project:** windsurf-security-scanner  
-> **Scan Date:** 8/4/2025, 3:37:43 PM  
+> **Scan Date:** 8/5/2025, 2:58:44 AM  
 > **Guardian Wolf Status:** 🛡️ 61 Issues Found
 
 ## 📊 Security Overview
@@ -9,30 +9,15 @@
 | Severity | Count | Status |
 |----------|-------|--------|
 | 🔴 Critical | 16 | ⚠️ Immediate Action Required |
-| 🟠 High | 14 | 🔧 Fix Before Deployment |
-| 🟡 Medium | 31 | 📋 Review Recommended |
+| 🟠 High | 12 | 🔧 Fix Before Deployment |
+| 🟡 Medium | 33 | 📋 Review Recommended |
 | 🔵 Low | 0 | ✅ Clear |
 
 ## 🔴 CRITICAL Issues (16) - URGENT
 
-### 1. scanner.js 🚨
+### 1. injection-rules.js 🚨
 
-**📁 Location:** `out/scanner.js:37`
-
-**🔍 Issue Type:** SQL INJECTION
-
-**📝 Description:** Potential SQL injection vulnerability detected
-
-**💻 Code:**
-```javascript
-'insertAdjacentHTML\\s*\\([^)]*\\+',
-```
-
----
-
-### 2. scanner.js 🚨
-
-**📁 Location:** `out/scanner.js:193`
+**📁 Location:** `out/rules/injection-rules.js:7`
 
 **🔍 Issue Type:** SQL INJECTION
 
@@ -45,9 +30,9 @@
 
 ---
 
-### 3. scanner.js 🚨
+### 2. injection-rules.js 🚨
 
-**📁 Location:** `out/scanner.js:194`
+**📁 Location:** `out/rules/injection-rules.js:8`
 
 **🔍 Issue Type:** SQL INJECTION
 
@@ -60,9 +45,9 @@
 
 ---
 
-### 4. scanner.js 🚨
+### 3. injection-rules.js 🚨
 
-**📁 Location:** `out/scanner.js:195`
+**📁 Location:** `out/rules/injection-rules.js:9`
 
 **🔍 Issue Type:** SQL INJECTION
 
@@ -75,9 +60,9 @@
 
 ---
 
-### 5. scanner.js 🚨
+### 4. injection-rules.js 🚨
 
-**📁 Location:** `out/scanner.js:196`
+**📁 Location:** `out/rules/injection-rules.js:10`
 
 **🔍 Issue Type:** SQL INJECTION
 
@@ -90,9 +75,9 @@
 
 ---
 
-### 6. scanner.js 🚨
+### 5. injection-rules.js 🚨
 
-**📁 Location:** `out/scanner.js:199`
+**📁 Location:** `out/rules/injection-rules.js:13`
 
 **🔍 Issue Type:** SQL INJECTION
 
@@ -105,9 +90,9 @@
 
 ---
 
-### 7. scanner.js 🚨
+### 6. injection-rules.js 🚨
 
-**📁 Location:** `out/scanner.js:200`
+**📁 Location:** `out/rules/injection-rules.js:14`
 
 **🔍 Issue Type:** SQL INJECTION
 
@@ -116,6 +101,21 @@
 **💻 Code:**
 ```javascript
 'ORDER BY.*?\\+.*?["\']'
+```
+
+---
+
+### 7. xss-rules.js 🚨
+
+**📁 Location:** `out/rules/xss-rules.js:9`
+
+**🔍 Issue Type:** SQL INJECTION
+
+**📝 Description:** Potential SQL injection vulnerability detected
+
+**💻 Code:**
+```javascript
+'insertAdjacentHTML\\s*\\([^)]*\\+',
 ```
 
 ---
@@ -135,24 +135,9 @@
 
 ---
 
-### 9. scanner.ts 🚨
+### 9. injection-rules.ts 🚨
 
-**📁 Location:** `src/scanner.ts:57`
-
-**🔍 Issue Type:** SQL INJECTION
-
-**📝 Description:** Potential SQL injection vulnerability detected
-
-**💻 Code:**
-```javascript
-'insertAdjacentHTML\\s*\\([^)]*\\+',
-```
-
----
-
-### 10. scanner.ts 🚨
-
-**📁 Location:** `src/scanner.ts:245`
+**📁 Location:** `src/rules/injection-rules.ts:6`
 
 **🔍 Issue Type:** SQL INJECTION
 
@@ -165,9 +150,9 @@
 
 ---
 
-### 11. scanner.ts 🚨
+### 10. injection-rules.ts 🚨
 
-**📁 Location:** `src/scanner.ts:246`
+**📁 Location:** `src/rules/injection-rules.ts:7`
 
 **🔍 Issue Type:** SQL INJECTION
 
@@ -180,9 +165,9 @@
 
 ---
 
-### 12. scanner.ts 🚨
+### 11. injection-rules.ts 🚨
 
-**📁 Location:** `src/scanner.ts:247`
+**📁 Location:** `src/rules/injection-rules.ts:8`
 
 **🔍 Issue Type:** SQL INJECTION
 
@@ -195,9 +180,9 @@
 
 ---
 
-### 13. scanner.ts 🚨
+### 12. injection-rules.ts 🚨
 
-**📁 Location:** `src/scanner.ts:248`
+**📁 Location:** `src/rules/injection-rules.ts:9`
 
 **🔍 Issue Type:** SQL INJECTION
 
@@ -210,9 +195,9 @@
 
 ---
 
-### 14. scanner.ts 🚨
+### 13. injection-rules.ts 🚨
 
-**📁 Location:** `src/scanner.ts:251`
+**📁 Location:** `src/rules/injection-rules.ts:12`
 
 **🔍 Issue Type:** SQL INJECTION
 
@@ -225,9 +210,9 @@
 
 ---
 
-### 15. scanner.ts 🚨
+### 14. injection-rules.ts 🚨
 
-**📁 Location:** `src/scanner.ts:252`
+**📁 Location:** `src/rules/injection-rules.ts:13`
 
 **🔍 Issue Type:** SQL INJECTION
 
@@ -236,6 +221,21 @@
 **💻 Code:**
 ```javascript
 'ORDER BY.*?\\+.*?["\']'
+```
+
+---
+
+### 15. xss-rules.ts 🚨
+
+**📁 Location:** `src/rules/xss-rules.ts:8`
+
+**🔍 Issue Type:** SQL INJECTION
+
+**📝 Description:** Potential SQL injection vulnerability detected
+
+**💻 Code:**
+```javascript
+'insertAdjacentHTML\\s*\\([^)]*\\+',
 ```
 
 ---
@@ -254,7 +254,7 @@ apiKey: "AIzaGxXxXxXxXxXxXxXxXxXxXxXxXxXxXxXxXxXx",
 ```
 
 
-## 🟠 HIGH Issues (14) - HIGH PRIORITY
+## 🟠 HIGH Issues (12) - HIGH PRIORITY
 
 ### 1. create-real-png.js ⚠️
 
@@ -271,24 +271,9 @@ const crc = require('crypto').createHash('md5').update(ihdr.slice(4, 21)).digest
 
 ---
 
-### 2. scanner.js ⚠️
+### 2. security-rules.js ⚠️
 
-**📁 Location:** `out/scanner.js:126`
-
-**🔍 Issue Type:** UNSAFE EVAL
-
-**📝 Description:** Unsafe code execution detected
-
-**💻 Code:**
-```javascript
-// Unsafe eval() usage (improved Firebase Functions exclusion)
-```
-
----
-
-### 3. scanner.js ⚠️
-
-**📁 Location:** `out/scanner.js:208`
+**📁 Location:** `out/rules/security-rules.js:73`
 
 **🔍 Issue Type:** CORS ISSUES
 
@@ -301,9 +286,9 @@ const crc = require('crypto').createHash('md5').update(ihdr.slice(4, 21)).digest
 
 ---
 
-### 4. scanner.js ⚠️
+### 3. security-rules.js ⚠️
 
-**📁 Location:** `out/scanner.js:209`
+**📁 Location:** `out/rules/security-rules.js:74`
 
 **🔍 Issue Type:** CORS ISSUES
 
@@ -316,9 +301,9 @@ const crc = require('crypto').createHash('md5').update(ihdr.slice(4, 21)).digest
 
 ---
 
-### 5. scanner.js ⚠️
+### 4. security-rules.js ⚠️
 
-**📁 Location:** `out/scanner.js:210`
+**📁 Location:** `out/rules/security-rules.js:75`
 
 **🔍 Issue Type:** CORS ISSUES
 
@@ -331,9 +316,9 @@ const crc = require('crypto').createHash('md5').update(ihdr.slice(4, 21)).digest
 
 ---
 
-### 6. scanner.js ⚠️
+### 5. security-rules.js ⚠️
 
-**📁 Location:** `out/scanner.js:211`
+**📁 Location:** `out/rules/security-rules.js:76`
 
 **🔍 Issue Type:** CORS ISSUES
 
@@ -346,24 +331,9 @@ const crc = require('crypto').createHash('md5').update(ihdr.slice(4, 21)).digest
 
 ---
 
-### 7. scanner.ts ⚠️
+### 6. security-rules.ts ⚠️
 
-**📁 Location:** `src/scanner.ts:166`
-
-**🔍 Issue Type:** UNSAFE EVAL
-
-**📝 Description:** Unsafe code execution detected
-
-**💻 Code:**
-```javascript
-// Unsafe eval() usage (improved Firebase Functions exclusion)
-```
-
----
-
-### 8. scanner.ts ⚠️
-
-**📁 Location:** `src/scanner.ts:262`
+**📁 Location:** `src/rules/security-rules.ts:82`
 
 **🔍 Issue Type:** CORS ISSUES
 
@@ -376,9 +346,9 @@ const crc = require('crypto').createHash('md5').update(ihdr.slice(4, 21)).digest
 
 ---
 
-### 9. scanner.ts ⚠️
+### 7. security-rules.ts ⚠️
 
-**📁 Location:** `src/scanner.ts:263`
+**📁 Location:** `src/rules/security-rules.ts:83`
 
 **🔍 Issue Type:** CORS ISSUES
 
@@ -391,9 +361,9 @@ const crc = require('crypto').createHash('md5').update(ihdr.slice(4, 21)).digest
 
 ---
 
-### 10. scanner.ts ⚠️
+### 8. security-rules.ts ⚠️
 
-**📁 Location:** `src/scanner.ts:264`
+**📁 Location:** `src/rules/security-rules.ts:84`
 
 **🔍 Issue Type:** CORS ISSUES
 
@@ -406,9 +376,9 @@ const crc = require('crypto').createHash('md5').update(ihdr.slice(4, 21)).digest
 
 ---
 
-### 11. scanner.ts ⚠️
+### 9. security-rules.ts ⚠️
 
-**📁 Location:** `src/scanner.ts:265`
+**📁 Location:** `src/rules/security-rules.ts:85`
 
 **🔍 Issue Type:** CORS ISSUES
 
@@ -421,7 +391,7 @@ const crc = require('crypto').createHash('md5').update(ihdr.slice(4, 21)).digest
 
 ---
 
-### 12. test-extension.js ⚠️
+### 10. test-extension.js ⚠️
 
 **📁 Location:** `test-extension.js:14`
 
@@ -436,7 +406,7 @@ document.getElementById('content').innerHTML = userInput + '<p>Welcome!</p>';
 
 ---
 
-### 13. test-extension.js ⚠️
+### 11. test-extension.js ⚠️
 
 **📁 Location:** `test-extension.js:19`
 
@@ -451,7 +421,7 @@ eval(code); // Dangerous!
 
 ---
 
-### 14. test-extension.js ⚠️
+### 12. test-extension.js ⚠️
 
 **📁 Location:** `test-extension.js:29`
 
@@ -465,7 +435,7 @@ const hash = crypto.createHash('md5').update('password').digest('hex');
 ```
 
 
-## 🟡 MEDIUM Issues (31) - MODERATE
+## 🟡 MEDIUM Issues (33) - MODERATE
 
 ### 1. create-logo.js ⚡
 
@@ -482,9 +452,9 @@ const logoSvg = `<svg width="128" height="128" viewBox="0 0 128 128" xmlns="http
 
 ---
 
-### 2. scanner.js ⚡
+### 2. security-rules.js ⚡
 
-**📁 Location:** `out/scanner.js:96`
+**📁 Location:** `out/rules/security-rules.js:8`
 
 **🔍 Issue Type:** FIREBASE SECURITY
 
@@ -497,9 +467,9 @@ const logoSvg = `<svg width="128" height="128" viewBox="0 0 128 128" xmlns="http
 
 ---
 
-### 3. scanner.js ⚡
+### 3. security-rules.js ⚡
 
-**📁 Location:** `out/scanner.js:97`
+**📁 Location:** `out/rules/security-rules.js:9`
 
 **🔍 Issue Type:** FIREBASE SECURITY
 
@@ -512,9 +482,9 @@ const logoSvg = `<svg width="128" height="128" viewBox="0 0 128 128" xmlns="http
 
 ---
 
-### 4. scanner.js ⚡
+### 4. security-rules.js ⚡
 
-**📁 Location:** `out/scanner.js:100`
+**📁 Location:** `out/rules/security-rules.js:12`
 
 **🔍 Issue Type:** FIREBASE SECURITY
 
@@ -527,9 +497,9 @@ const logoSvg = `<svg width="128" height="128" viewBox="0 0 128 128" xmlns="http
 
 ---
 
-### 5. scanner.js ⚡
+### 5. security-rules.js ⚡
 
-**📁 Location:** `out/scanner.js:101`
+**📁 Location:** `out/rules/security-rules.js:13`
 
 **🔍 Issue Type:** FIREBASE SECURITY
 
@@ -542,9 +512,9 @@ const logoSvg = `<svg width="128" height="128" viewBox="0 0 128 128" xmlns="http
 
 ---
 
-### 6. scanner.js ⚡
+### 6. security-rules.js ⚡
 
-**📁 Location:** `out/scanner.js:106`
+**📁 Location:** `out/rules/security-rules.js:18`
 
 **🔍 Issue Type:** FIREBASE SECURITY
 
@@ -557,9 +527,9 @@ const logoSvg = `<svg width="128" height="128" viewBox="0 0 128 128" xmlns="http
 
 ---
 
-### 7. scanner.js ⚡
+### 7. security-rules.js ⚡
 
-**📁 Location:** `out/scanner.js:116`
+**📁 Location:** `out/rules/security-rules.js:26`
 
 **🔍 Issue Type:** FIREBASE SECURITY
 
@@ -572,9 +542,24 @@ const logoSvg = `<svg width="128" height="128" viewBox="0 0 128 128" xmlns="http
 
 ---
 
-### 8. scanner.js ⚡
+### 8. security-rules.js ⚡
 
-**📁 Location:** `out/scanner.js:119`
+**📁 Location:** `out/rules/security-rules.js:27`
+
+**🔍 Issue Type:** FIREBASE SECURITY
+
+**📝 Description:** Firebase configuration should use environment variables for better security practices
+
+**💻 Code:**
+```javascript
+'admin\\.initializeApp\\(\\{[^}]*serviceAccountKey',
+```
+
+---
+
+### 9. security-rules.js ⚡
+
+**📁 Location:** `out/rules/security-rules.js:29`
 
 **🔍 Issue Type:** FIREBASE SECURITY
 
@@ -587,9 +572,9 @@ const logoSvg = `<svg width="128" height="128" viewBox="0 0 128 128" xmlns="http
 
 ---
 
-### 9. scanner.js ⚡
+### 10. security-rules.js ⚡
 
-**📁 Location:** `out/scanner.js:120`
+**📁 Location:** `out/rules/security-rules.js:30`
 
 **🔍 Issue Type:** FIREBASE SECURITY
 
@@ -602,9 +587,9 @@ const logoSvg = `<svg width="128" height="128" viewBox="0 0 128 128" xmlns="http
 
 ---
 
-### 10. scanner.js ⚡
+### 11. security-rules.js ⚡
 
-**📁 Location:** `out/scanner.js:144`
+**📁 Location:** `out/rules/security-rules.js:39`
 
 **🔍 Issue Type:** INSECURE HTTP
 
@@ -617,9 +602,9 @@ const logoSvg = `<svg width="128" height="128" viewBox="0 0 128 128" xmlns="http
 
 ---
 
-### 11. scanner.js ⚡
+### 12. security-rules.js ⚡
 
-**📁 Location:** `out/scanner.js:145`
+**📁 Location:** `out/rules/security-rules.js:40`
 
 **🔍 Issue Type:** INSECURE HTTP
 
@@ -632,9 +617,9 @@ const logoSvg = `<svg width="128" height="128" viewBox="0 0 128 128" xmlns="http
 
 ---
 
-### 12. scanner.js ⚡
+### 13. security-rules.js ⚡
 
-**📁 Location:** `out/scanner.js:146`
+**📁 Location:** `out/rules/security-rules.js:41`
 
 **🔍 Issue Type:** INSECURE HTTP
 
@@ -647,9 +632,9 @@ const logoSvg = `<svg width="128" height="128" viewBox="0 0 128 128" xmlns="http
 
 ---
 
-### 13. scanner.js ⚡
+### 14. security-rules.js ⚡
 
-**📁 Location:** `out/scanner.js:147`
+**📁 Location:** `out/rules/security-rules.js:42`
 
 **🔍 Issue Type:** INSECURE HTTP
 
@@ -662,9 +647,9 @@ const logoSvg = `<svg width="128" height="128" viewBox="0 0 128 128" xmlns="http
 
 ---
 
-### 14. scanner.js ⚡
+### 15. security-rules.js ⚡
 
-**📁 Location:** `out/scanner.js:209`
+**📁 Location:** `out/rules/security-rules.js:74`
 
 **🔍 Issue Type:** FIREBASE SECURITY
 
@@ -677,7 +662,7 @@ const logoSvg = `<svg width="128" height="128" viewBox="0 0 128 128" xmlns="http
 
 ---
 
-### 15. security-report.html ⚡
+### 16. security-report.html ⚡
 
 **📁 Location:** `security-report.html:37`
 
@@ -692,7 +677,7 @@ const logoSvg = `<svg width="128" height="128" viewBox="0 0 128 128" xmlns="http
 
 ---
 
-### 16. security-report.html ⚡
+### 17. security-report.html ⚡
 
 **📁 Location:** `security-report.html:48`
 
@@ -707,7 +692,7 @@ const logoSvg = `<svg width="128" height="128" viewBox="0 0 128 128" xmlns="http
 
 ---
 
-### 17. security-report.html ⚡
+### 18. security-report.html ⚡
 
 **📁 Location:** `security-report.html:59`
 
@@ -722,9 +707,9 @@ const logoSvg = `<svg width="128" height="128" viewBox="0 0 128 128" xmlns="http
 
 ---
 
-### 18. scanner.ts ⚡
+### 19. security-rules.ts ⚡
 
-**📁 Location:** `src/scanner.ts:128`
+**📁 Location:** `src/rules/security-rules.ts:7`
 
 **🔍 Issue Type:** FIREBASE SECURITY
 
@@ -737,9 +722,9 @@ const logoSvg = `<svg width="128" height="128" viewBox="0 0 128 128" xmlns="http
 
 ---
 
-### 19. scanner.ts ⚡
+### 20. security-rules.ts ⚡
 
-**📁 Location:** `src/scanner.ts:129`
+**📁 Location:** `src/rules/security-rules.ts:8`
 
 **🔍 Issue Type:** FIREBASE SECURITY
 
@@ -752,9 +737,9 @@ const logoSvg = `<svg width="128" height="128" viewBox="0 0 128 128" xmlns="http
 
 ---
 
-### 20. scanner.ts ⚡
+### 21. security-rules.ts ⚡
 
-**📁 Location:** `src/scanner.ts:133`
+**📁 Location:** `src/rules/security-rules.ts:12`
 
 **🔍 Issue Type:** FIREBASE SECURITY
 
@@ -767,9 +752,9 @@ const logoSvg = `<svg width="128" height="128" viewBox="0 0 128 128" xmlns="http
 
 ---
 
-### 21. scanner.ts ⚡
+### 22. security-rules.ts ⚡
 
-**📁 Location:** `src/scanner.ts:134`
+**📁 Location:** `src/rules/security-rules.ts:13`
 
 **🔍 Issue Type:** FIREBASE SECURITY
 
@@ -782,9 +767,9 @@ const logoSvg = `<svg width="128" height="128" viewBox="0 0 128 128" xmlns="http
 
 ---
 
-### 22. scanner.ts ⚡
+### 23. security-rules.ts ⚡
 
-**📁 Location:** `src/scanner.ts:141`
+**📁 Location:** `src/rules/security-rules.ts:20`
 
 **🔍 Issue Type:** FIREBASE SECURITY
 
@@ -797,9 +782,9 @@ const logoSvg = `<svg width="128" height="128" viewBox="0 0 128 128" xmlns="http
 
 ---
 
-### 23. scanner.ts ⚡
+### 24. security-rules.ts ⚡
 
-**📁 Location:** `src/scanner.ts:153`
+**📁 Location:** `src/rules/security-rules.ts:29`
 
 **🔍 Issue Type:** FIREBASE SECURITY
 
@@ -812,9 +797,24 @@ const logoSvg = `<svg width="128" height="128" viewBox="0 0 128 128" xmlns="http
 
 ---
 
-### 24. scanner.ts ⚡
+### 25. security-rules.ts ⚡
 
-**📁 Location:** `src/scanner.ts:157`
+**📁 Location:** `src/rules/security-rules.ts:30`
+
+**🔍 Issue Type:** FIREBASE SECURITY
+
+**📝 Description:** Firebase configuration should use environment variables for better security practices
+
+**💻 Code:**
+```javascript
+'admin\\.initializeApp\\(\\{[^}]*serviceAccountKey',
+```
+
+---
+
+### 26. security-rules.ts ⚡
+
+**📁 Location:** `src/rules/security-rules.ts:33`
 
 **🔍 Issue Type:** FIREBASE SECURITY
 
@@ -827,9 +827,9 @@ const logoSvg = `<svg width="128" height="128" viewBox="0 0 128 128" xmlns="http
 
 ---
 
-### 25. scanner.ts ⚡
+### 27. security-rules.ts ⚡
 
-**📁 Location:** `src/scanner.ts:158`
+**📁 Location:** `src/rules/security-rules.ts:34`
 
 **🔍 Issue Type:** FIREBASE SECURITY
 
@@ -842,9 +842,9 @@ const logoSvg = `<svg width="128" height="128" viewBox="0 0 128 128" xmlns="http
 
 ---
 
-### 26. scanner.ts ⚡
+### 28. security-rules.ts ⚡
 
-**📁 Location:** `src/scanner.ts:188`
+**📁 Location:** `src/rules/security-rules.ts:45`
 
 **🔍 Issue Type:** INSECURE HTTP
 
@@ -857,9 +857,9 @@ const logoSvg = `<svg width="128" height="128" viewBox="0 0 128 128" xmlns="http
 
 ---
 
-### 27. scanner.ts ⚡
+### 29. security-rules.ts ⚡
 
-**📁 Location:** `src/scanner.ts:189`
+**📁 Location:** `src/rules/security-rules.ts:46`
 
 **🔍 Issue Type:** INSECURE HTTP
 
@@ -872,9 +872,9 @@ const logoSvg = `<svg width="128" height="128" viewBox="0 0 128 128" xmlns="http
 
 ---
 
-### 28. scanner.ts ⚡
+### 30. security-rules.ts ⚡
 
-**📁 Location:** `src/scanner.ts:190`
+**📁 Location:** `src/rules/security-rules.ts:47`
 
 **🔍 Issue Type:** INSECURE HTTP
 
@@ -887,9 +887,9 @@ const logoSvg = `<svg width="128" height="128" viewBox="0 0 128 128" xmlns="http
 
 ---
 
-### 29. scanner.ts ⚡
+### 31. security-rules.ts ⚡
 
-**📁 Location:** `src/scanner.ts:191`
+**📁 Location:** `src/rules/security-rules.ts:48`
 
 **🔍 Issue Type:** INSECURE HTTP
 
@@ -902,9 +902,9 @@ const logoSvg = `<svg width="128" height="128" viewBox="0 0 128 128" xmlns="http
 
 ---
 
-### 30. scanner.ts ⚡
+### 32. security-rules.ts ⚡
 
-**📁 Location:** `src/scanner.ts:263`
+**📁 Location:** `src/rules/security-rules.ts:83`
 
 **🔍 Issue Type:** FIREBASE SECURITY
 
@@ -917,7 +917,7 @@ const logoSvg = `<svg width="128" height="128" viewBox="0 0 128 128" xmlns="http
 
 ---
 
-### 31. test-extension.js ⚡
+### 33. test-extension.js ⚡
 
 **📁 Location:** `test-extension.js:23`
 
@@ -937,10 +937,10 @@ fetch('http://api.example.com/data')
 **16 critical security issue(s) found**
 
 ### ⚠️ HIGH RISK VULNERABILITIES
-**14 high-risk security issue(s) detected**
+**12 high-risk security issue(s) detected**
 
 ### 📋 ADDITIONAL VULNERABILITIES
-**31 medium/low security issue(s) detected**
+**33 medium/low security issue(s) detected**
 
 ---
 
@@ -956,7 +956,7 @@ fetch('http://api.example.com/data')
 
 ---
 
-**Generated by VibeWolf v1.0.8** | [Buy me a coffee](https://buymeacoffee.com/watsy) ☕
+**Generated by CodeWolf v2.0.0** | [Support on Ko-fi](https://ko-fi.com/watsy) ☕
 
 ---
-*Generated by VibeWolf Security Scanner - Your Guardian Wolf 🐺*
+*Generated by CodeWolf Security Scanner - Your Guardian Wolf 🐺*

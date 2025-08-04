@@ -168,7 +168,12 @@
             "dist/**",
             "build/**",
             ".next/**",
-            "coverage/**"
+            "coverage/**",
+            "src/rules/**",
+            "out/rules/**",
+            "test-extension.js",
+            "security-report.html",
+            "create-*.js"
           ],
           "description": "File patterns to exclude from scanning"
         }
