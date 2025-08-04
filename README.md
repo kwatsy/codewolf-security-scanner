@@ -1,4 +1,4 @@
-# 🐺 VibeWolf Security Scanner
+# 🐺 CodeWolf Security Scanner
 
 **The Guardian Wolf for Developers** 🛡️
 
