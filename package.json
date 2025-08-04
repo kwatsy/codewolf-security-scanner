@@ -1,18 +1,18 @@
 {
-  "name": "vibewolf-security-scanner",
-  "displayName": "🐺 VibeWolf Security Scanner",
+  "name": "codewolf-security-scanner",
+  "displayName": "🐺 CodeWolf Security Scanner",
   "description": "🛡️ Protect your apps from dangerous security vulnerabilities - The guardian wolf for new and seasoned developers",
-  "version": "1.0.13",
-  "publisher": "vibewolf",
+  "version": "2.0.0",
+  "publisher": "codewolf",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/4wavelabs/vibewolf-security-scanner"
+    "url": "https://github.com/4wavelabs/codewolf-security-scanner"
   },
   "bugs": {
-    "url": "https://github.com/4wavelabs/vibewolf-security-scanner/issues"
+    "url": "https://github.com/4wavelabs/codewolf-security-scanner/issues"
   },
-  "homepage": "https://github.com/4wavelabs/vibewolf-security-scanner#readme",
+  "homepage": "https://github.com/4wavelabs/codewolf-security-scanner#readme",
   "icon": "images/icon.png",
   "engines": {
     "vscode": "^1.74.0"
@@ -37,7 +37,7 @@
     "react",
     "vue",
     "angular",
-    "vibewolf",
+    "codewolf",
     "security-audit",
     "code-security"
   ],
