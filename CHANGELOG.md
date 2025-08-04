@@ -1,4 +1,31 @@
-# 🐺 VibeWolf Security Scanner - Changelog
+# 🐺 CodeWolf Security Scanner - Changelog
+
+## Version 2.0.0 - August 5, 2025
+
+### 🎆 **MAJOR REBRAND: VibeWolf → CodeWolf**
+
+#### 🔄 **Complete Brand Transformation**
+- **NEW NAME**: Rebranded from "VibeWolf" to "CodeWolf" for better clarity
+- **UPDATED BRANDING**: All references, commands, and UI elements updated
+- **VERSION BUMP**: Major version increment to 2.0.0 to mark significant change
+- **REPOSITORY URLS**: Updated GitHub repository references
+- **DOCUMENTATION**: Complete README.md overhaul with new branding
+
+#### 📝 **Files Updated**
+- **package.json**: Name, display name, publisher, repository URLs, keywords
+- **extension.ts**: Command names, diagnostic sources, messages, comments
+- **report-generator.ts**: Report filename references (CODEWOLF-SECURITY-REPORT.md)
+- **report.html**: Title, headers, CSS classes, footer text, version info
+- **README.md**: Complete documentation rebrand with all references updated
+- **CHANGELOG.md**: Updated title and added rebrand entry
+
+#### ✨ **What Stays the Same**
+- **FUNCTIONALITY**: All security scanning features remain identical
+- **ARCHITECTURE**: Maintains the excellent modular design from v1.0.13
+- **PERFORMANCE**: Same 91% code reduction and optimized structure
+- **FREE & OPEN**: Still completely free with MIT license
+
+---
 
 ## Version 1.0.13 - August 4, 2025
 
@@ -9,6 +36,7 @@
 - **MODULAR DESIGN**: Complete separation into focused, maintainable modules
 - **CLEAN ARCHITECTURE**: Single Responsibility Principle applied throughout
 - **ENHANCED MAINTAINABILITY**: Easy to extend, test, and modify individual components
+- **FUTURE-READY**: Perfect foundation for implementing GROK 4 improvements
 
 #### 📁 **New Modular Structure**
 - **INTERFACES**: Extracted `Vulnerability` and `SecurityRule` type definitions
@@ -41,7 +69,7 @@
 
 #### 📚 **Documentation & Planning**
 - **REFACTORING PLAN**: Comprehensive documentation of the transformation process
-- **ROADMAP**: Updated with completed architectural improvements
+- **GROK 4 ROADMAP**: Updated with completed architectural improvements
 - **VERSION TRACKING**: Proper versioning through each refactoring phase
 - **GITHUB INTEGRATION**: Complete codebase published with clean structure
 
