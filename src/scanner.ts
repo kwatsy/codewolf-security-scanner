@@ -9,14 +9,12 @@ interface Vulnerability {
     severity: string;
     description: string;
     codeSnippet: string;
-    recommendation: string;
 }
 
 interface SecurityRule {
     patterns: string[];
     severity: string;
     description: string;
-    recommendation: string;
 }
 
 export class SecurityScanner {
@@ -62,20 +60,27 @@ export class SecurityScanner {
                 ],
                 severity: 'HIGH',
                 description: 'Potential XSS vulnerability through dynamic HTML injection',
-                recommendation: 'Use textContent, createElement, or sanitize HTML input'
+
             },
 
             // Hardcoded API Keys & Secrets (refined patterns to reduce false positives)
             exposed_secrets: {
                 patterns: [
-                    // API Keys (more specific patterns)
-                    'api_key["\']?\s*[:=]\s*["\'][A-Za-z0-9]{20,}["\']',
-                    'apikey["\']?\s*[:=]\s*["\'][A-Za-z0-9]{20,}["\']',
-                    'api-key["\']?\s*[:=]\s*["\'][A-Za-z0-9]{20,}["\']',
-                    'secret["\']?\s*[:=]\s*["\'][A-Za-z0-9]{20,}["\']',
-                    'token["\']?\s*[:=]\s*["\'][A-Za-z0-9]{20,}["\']',
-                    'access_token["\']?\s*[:=]\s*["\'][A-Za-z0-9]{20,}["\']',
-                    'auth_token["\']?\s*[:=]\s*["\'][A-Za-z0-9]{20,}["\']',
+                    // API Keys (comprehensive patterns)
+                    'api_?key["\']?\s*[:=]\s*["\'][A-Za-z0-9_\-]{15,}["\']',
+                    'apikey["\']?\s*[:=]\s*["\'][A-Za-z0-9_\-]{15,}["\']',
+                    'api-key["\']?\s*[:=]\s*["\'][A-Za-z0-9_\-]{15,}["\']',
+                    'secret["\']?\s*[:=]\s*["\'][A-Za-z0-9_\-]{15,}["\']',
+                    'token["\']?\s*[:=]\s*["\'][A-Za-z0-9_\-]{15,}["\']',
+                    'access_token["\']?\s*[:=]\s*["\'][A-Za-z0-9_\-]{15,}["\']',
+                    'auth_token["\']?\s*[:=]\s*["\'][A-Za-z0-9_\-]{15,}["\']',
+                    
+                    // Generic key patterns (catch more formats)
+                    '["\']?[A-Za-z0-9_\-]{32,}["\']?\s*//.*(?:key|secret|token|api)',
+                    '(?:key|secret|token|api)["\']?\s*[:=]\s*["\'][A-Za-z0-9_\-]{15,}["\']',
+                    
+                    // Firebase API keys (specific pattern)
+                    'AIza[0-9A-Za-z\-_]{35}',
                     
                     // Passwords & Credentials (avoid React patterns)
                     'password["\']?\s*[:=]\s*["\'][A-Za-z0-9]{8,}["\']',
@@ -113,7 +118,7 @@ export class SecurityScanner {
                 ],
                 severity: 'CRITICAL',
                 description: 'Hardcoded secrets, credentials, or sensitive data exposed in frontend code',
-                recommendation: 'Move all secrets to server-side, use environment variables, or secure credential management'
+
             },
 
             // Firebase Security Issues (Context-Aware Detection)
@@ -137,7 +142,7 @@ export class SecurityScanner {
                 ],
                 severity: 'MEDIUM', // Changed from CRITICAL - Firebase web keys are designed to be public
                 description: 'Firebase configuration should use environment variables for better security practices',
-                recommendation: 'Move Firebase API key to environment variables (process.env.FIREBASE_API_KEY). Note: Firebase web API keys are designed to be public, but environment variables are best practice for key management and rotation.'
+
             },
             
             // Firebase Critical Security Issues (separate rule for truly critical issues)
@@ -146,7 +151,7 @@ export class SecurityScanner {
                     // Server-side keys that should NEVER be in client code
                     'firebase-admin.*private_key',
                     'serviceAccountKey.*private_key',
-                    'admin\.initializeApp\(.*private_key',
+                    'admin\.initializeApp\(.*private_key\)',
                     
                     // Dangerous Firebase Security Rules
                     'allow read, write: if true',
@@ -155,7 +160,7 @@ export class SecurityScanner {
                 ],
                 severity: 'CRITICAL',
                 description: 'Critical Firebase security vulnerability - server credentials or insecure rules detected',
-                recommendation: 'IMMEDIATE ACTION: Remove server-side Firebase credentials from client code and implement proper Firebase Security Rules with authentication'
+
             },
 
             // Unsafe eval() usage (improved Firebase Functions exclusion)
@@ -174,7 +179,7 @@ export class SecurityScanner {
                 ],
                 severity: 'HIGH',
                 description: 'Unsafe code execution detected',
-                recommendation: 'Avoid eval(), Function() constructor, and string-based code execution. Note: Firebase Functions calls like "await calculateProfileFunction()" are safe and excluded from this check.'
+
             },
 
             // Insecure HTTP requests
@@ -187,7 +192,7 @@ export class SecurityScanner {
                 ],
                 severity: 'MEDIUM',
                 description: 'Insecure HTTP requests detected',
-                recommendation: 'Use HTTPS for all external requests'
+
             },
 
             // Cryptographic weaknesses
@@ -201,7 +206,7 @@ export class SecurityScanner {
                 ],
                 severity: 'HIGH',
                 description: 'Weak cryptographic algorithm detected',
-                recommendation: 'Use SHA-256, SHA-3, or other modern cryptographic algorithms'
+
             },
 
             // Timing attacks
@@ -215,7 +220,7 @@ export class SecurityScanner {
                 ],
                 severity: 'MEDIUM',
                 description: 'Potential timing attack vulnerability in string comparison',
-                recommendation: 'Use constant-time comparison functions for sensitive data'
+
             },
 
             // Local storage issues
@@ -231,7 +236,7 @@ export class SecurityScanner {
                 ],
                 severity: 'HIGH',
                 description: 'Sensitive data stored insecurely in browser storage',
-                recommendation: 'Use secure, httpOnly cookies or avoid storing sensitive data client-side'
+
             },
 
             // SQL Injection vulnerabilities
@@ -248,7 +253,7 @@ export class SecurityScanner {
                 ],
                 severity: 'CRITICAL',
                 description: 'Potential SQL injection vulnerability detected',
-                recommendation: 'Use parameterized queries or prepared statements instead of string concatenation'
+
             },
 
             // CORS issues
@@ -261,7 +266,7 @@ export class SecurityScanner {
                 ],
                 severity: 'HIGH',
                 description: 'Insecure CORS configuration detected',
-                recommendation: 'Specify exact origins instead of wildcards, especially with credentials'
+
             }
         };
     }
@@ -313,8 +318,7 @@ export class SecurityScanner {
                             vulnerabilityType: vulnType,
                             severity: rule.severity,
                             description: rule.description,
-                            codeSnippet: line.trim(),
-                            recommendation: rule.recommendation
+                            codeSnippet: line.trim()
                         });
                         break; // Avoid duplicate matches on same line
                     }
@@ -784,7 +788,7 @@ export class SecurityScanner {
                                                 <div class="vuln-type">   Type: ${vuln.vulnerabilityType.replace(/_/g, ' ')}</div>
                                                 <div class="vuln-issue">   Issue: ${vuln.description}</div>
                                                 <div class="vuln-code-line">   Code: ${vuln.codeSnippet.trim()}</div>
-                                                <div class="vuln-fix">   Fix: ${vuln.recommendation}</div>
+
                                             </div>
                                         `;
                                     }).join('')}

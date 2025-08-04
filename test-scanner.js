@@ -5,17 +5,31 @@ const path = require('path');
 async function testScanner() {
     const scanner = new SecurityScanner();
     
-    console.log('🔍 Testing Security Scanner on Coffee Profile App...\n');
+    console.log('🔍 Testing Security Scanner...\n');
     
-    // Test on your Coffee Profile App
-    const appPath = path.join(__dirname, '..', 'MyCoffeeProfileApp', 'src');
+    // Test on current directory
+    const appPath = __dirname;
     
     try {
         console.log(`📁 Scanning: ${appPath}`);
+        
+        // Check if path exists
+        const fs = require('fs');
+        if (!fs.existsSync(appPath)) {
+            console.error(`❌ Path does not exist: ${appPath}`);
+            return;
+        }
+        
+        console.log('🔄 Starting scan...');
         const vulnerabilities = await scanner.scanDirectory(appPath);
         
         console.log(`\n📊 SCAN RESULTS:`);
         console.log(`Total vulnerabilities found: ${vulnerabilities.length}`);
+        
+        // Debug: Show what files were scanned
+        console.log('\n🔍 Debug info:');
+        console.log('Scanner rules loaded:', Object.keys(scanner.rules || {}).length);
+        console.log('Target extensions:', Array.from(scanner.targetExtensions || []).join(', '));
         
         if (vulnerabilities.length > 0) {
             // Group by severity
@@ -40,7 +54,6 @@ async function testScanner() {
                 console.log(`   Line: ${vuln.lineNumber}`);
                 console.log(`   Issue: ${vuln.description}`);
                 console.log(`   Code: ${vuln.codeSnippet}`);
-                console.log(`   Fix: ${vuln.recommendation}`);
             });
             
             // Generate HTML report

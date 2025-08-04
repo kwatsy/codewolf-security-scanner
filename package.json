@@ -2,7 +2,7 @@
   "name": "vibewolf-security-scanner",
   "displayName": "🐺 VibeWolf Security Scanner",
   "description": "🛡️ Protect your apps from dangerous security vulnerabilities - The guardian wolf for new and seasoned developers",
-  "version": "1.0.5",
+  "version": "1.0.8",
   "publisher": "vibewolf",
   "license": "MIT",
   "repository": {
@@ -49,7 +49,8 @@
         {
           "id": "securityScanner",
           "name": "🐺 VibeWolf Security Issues",
-          "when": "securityScanner.hasIssues"
+          "when": "securityScanner.hasIssues",
+          "icon": "$(shield)"
         }
       ]
     },

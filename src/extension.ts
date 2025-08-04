@@ -19,8 +19,6 @@ export function activate(context: vscode.ExtensionContext) {
     // Register VibeWolf management commands
     const ignoreIssueCommand = vscode.commands.registerCommand('vibewolf.ignoreIssue', ignoreIssue);
     const addToWhitelistCommand = vscode.commands.registerCommand('vibewolf.addToWhitelist', addToWhitelist);
-    const markFalsePositiveCommand = vscode.commands.registerCommand('vibewolf.markFalsePositive', markFalsePositive);
-    const showFixDetailsCommand = vscode.commands.registerCommand('vibewolf.showFixDetails', showFixDetails);
     
     // Register code actions provider for VibeWolf management
     const codeActionsProvider = vscode.languages.registerCodeActionsProvider('*', {
@@ -58,30 +56,6 @@ export function activate(context: vscode.ExtensionContext) {
                     arguments: [document.uri, range, diagnostic]
                 };
                 actions.push(whitelistAction);
-                
-                // Mark as false positive
-                const falsePositiveAction = new vscode.CodeAction(
-                    '🎯 Mark as false positive',
-                    vscode.CodeActionKind.QuickFix
-                );
-                falsePositiveAction.command = {
-                    command: 'vibewolf.markFalsePositive',
-                    title: 'Mark False Positive',
-                    arguments: [document.uri, range, diagnostic]
-                };
-                actions.push(falsePositiveAction);
-                
-                // Show detailed fix information
-                const fixDetailsAction = new vscode.CodeAction(
-                    '🔍 Show detailed fix guide',
-                    vscode.CodeActionKind.QuickFix
-                );
-                fixDetailsAction.command = {
-                    command: 'vibewolf.showFixDetails',
-                    title: 'Show Fix Details',
-                    arguments: [document.uri, range, diagnostic]
-                };
-                actions.push(fixDetailsAction);
             }
             
             return actions;
@@ -100,8 +74,6 @@ export function activate(context: vscode.ExtensionContext) {
         generateReportCommand,
         ignoreIssueCommand,
         addToWhitelistCommand,
-        markFalsePositiveCommand,
-        showFixDetailsCommand,
         codeActionsProvider,
         onDidSaveDocument,
         onDidChangeActiveEditor,
@@ -347,7 +319,7 @@ async function outputScanResults(vulnerabilities: any[]) {
                 outputChannel.appendLine(`   Type: ${vuln.vulnerabilityType}`);
                 outputChannel.appendLine(`   Issue: ${vuln.description}`);
                 outputChannel.appendLine(`   Code: ${vuln.codeSnippet.trim()}`);
-                outputChannel.appendLine(`   Fix: ${vuln.recommendation}`);
+
                 outputChannel.appendLine('');
             });
         }
@@ -401,9 +373,6 @@ async function outputScanResults(vulnerabilities: any[]) {
                     
                     markdownContent += `**💻 Code:**\n\`\`\`javascript\n${vuln.codeSnippet.trim()}\n\`\`\`\n\n`;
                     
-                    markdownContent += `**🛠️ How to Fix:** ${vuln.recommendation}\n\n`;
-                    markdownContent += `**✅ Status:** [ ] Fixed\n\n`;
-                    
                     if (index < vulns.length - 1) {
                         markdownContent += `---\n\n`;
                     }
@@ -415,22 +384,16 @@ async function outputScanResults(vulnerabilities: any[]) {
     
     markdownContent += `## 🎯 Action Plan\n\n`;
     if (bySeverity.CRITICAL.length > 0) {
-        markdownContent += `### 🚨 IMMEDIATE (Critical Issues)\n`;
-        markdownContent += `1. **Stop deployment** - Critical security vulnerabilities found\n`;
-        markdownContent += `2. **Fix all critical issues** before proceeding\n`;
-        markdownContent += `3. **Re-scan** to verify fixes\n\n`;
+        markdownContent += `### 🚨 CRITICAL VULNERABILITIES DETECTED\n`;
+        markdownContent += `**${bySeverity.CRITICAL.length} critical security issue(s) found**\n\n`;
     }
     if (bySeverity.HIGH.length > 0) {
-        markdownContent += `### ⚠️ HIGH PRIORITY (High Risk Issues)\n`;
-        markdownContent += `1. **Address before deployment** to app stores\n`;
-        markdownContent += `2. **Review security implications** carefully\n`;
-        markdownContent += `3. **Test fixes** thoroughly\n\n`;
+        markdownContent += `### ⚠️ HIGH RISK VULNERABILITIES\n`;
+        markdownContent += `**${bySeverity.HIGH.length} high-risk security issue(s) detected**\n\n`;
     }
     if (bySeverity.MEDIUM.length > 0 || bySeverity.LOW.length > 0) {
-        markdownContent += `### 📋 RECOMMENDED (Medium/Low Issues)\n`;
-        markdownContent += `1. **Review and fix** when possible\n`;
-        markdownContent += `2. **Consider security best practices**\n`;
-        markdownContent += `3. **Document any intentional exceptions**\n\n`;
+        markdownContent += `### 📋 ADDITIONAL VULNERABILITIES\n`;
+        markdownContent += `**${bySeverity.MEDIUM.length + bySeverity.LOW.length} medium/low security issue(s) detected**\n\n`;
     }
     
     markdownContent += `---\n\n`;
@@ -441,18 +404,14 @@ async function outputScanResults(vulnerabilities: any[]) {
     markdownContent += `- 📊 **Triple Output** - Visual + Terminal + This Report\n\n`;
     markdownContent += `*"No developer should accidentally expose their secrets to the world."* 🛡️\n\n`;
     markdownContent += `---\n\n`;
-    markdownContent += `**Generated by VibeWolf v1.0.0** | [Buy me a coffee](https://buymeacoffee.com/watsy) ☕\n`;
-    markdownContent += `1. [ ] Review all CRITICAL vulnerabilities first\n`;
-    markdownContent += `2. [ ] Fix HIGH severity issues before deployment\n`;
-    markdownContent += `3. [ ] Address MEDIUM issues for production\n`;
-    markdownContent += `4. [ ] Consider LOW priority items for future releases\n\n`;
+    markdownContent += `**Generated by VibeWolf v1.0.8** | [Buy me a coffee](https://buymeacoffee.com/watsy) ☕\n\n`;
     markdownContent += `---\n`;
     markdownContent += `*Generated by VibeWolf Security Scanner - Your Guardian Wolf 🐺*\n`;
     
     try {
         fs.writeFileSync(reportPath, markdownContent);
         outputChannel.appendLine(`📄 Detailed report saved to: !VIBEWOLF-SECURITY-REPORT.md`);
-        outputChannel.appendLine('🎯 Use this file to track your security fixes!');
+        outputChannel.appendLine('📄 Security vulnerability report generated');
     } catch (error) {
         outputChannel.appendLine(`❌ Failed to create report file: ${error}`);
     }
@@ -487,7 +446,7 @@ function createDiagnostic(vulnerability: any): vscode.Diagnostic {
 
     const diagnostic = new vscode.Diagnostic(
         range,
-        `🐺 ${vulnerability.description}\n💡 Fix: ${vulnerability.recommendation}\n\n🎛️ Right-click for VibeWolf management options`,
+        `🐺 ${vulnerability.description}\n\n🔍 Security vulnerability detected - Right-click for options`,
         severity
     );
     
@@ -554,36 +513,7 @@ async function addToWhitelist(uri: vscode.Uri, range: vscode.Range, diagnostic: 
     }
 }
 
-async function markFalsePositive(uri: vscode.Uri, range: vscode.Range, diagnostic: vscode.Diagnostic) {
-    const choice = await vscode.window.showQuickPick([
-        '🎯 This is not actually a security issue',
-        '🔧 This is intentional/safe in this context',
-        '📚 Help improve VibeWolf detection',
-        '📊 Report false positive to developers'
-    ], {
-        placeHolder: '🐺 Why is this a false positive?'
-    });
-    
-    if (choice) {
-        vscode.window.showInformationMessage(`🐺 VibeWolf: Thanks for the feedback! ${choice}`);
-        // TODO: Implement false positive reporting
-    }
-}
 
-async function showFixDetails(uri: vscode.Uri, range: vscode.Range, diagnostic: vscode.Diagnostic) {
-    const vulnerabilityType = typeof diagnostic.code === 'object' ? diagnostic.code.value : diagnostic.code;
-    
-    const fixGuides: Record<string, string> = {
-        'exposed_secrets': `🔐 **How to Fix Exposed Secrets:**\n\n1. Move secrets to environment variables\n2. Use .env files (never commit them!)\n3. Use secure credential management\n4. Consider using secret management services\n\n**Example:**\n\`\`\`javascript\n// ❌ Bad\nconst apiKey = "abc123";\n\n// ✅ Good\nconst apiKey = process.env.API_KEY;\n\`\`\``,
-        'firebase_security': `🔥 **How to Fix Firebase Security:**\n\n1. Implement proper security rules\n2. Use authentication\n3. Validate data on server-side\n4. Never expose admin credentials\n\n**Example Security Rules:**\n\`\`\`javascript\nrules_version = '2';\nservice cloud.firestore {\n  match /databases/{database}/documents {\n    match /{document=**} {\n      allow read, write: if request.auth != null;\n    }\n  }\n}\n\`\`\``,
-        'xss_vulnerabilities': `⚡ **How to Fix XSS Vulnerabilities:**\n\n1. Use textContent instead of innerHTML\n2. Sanitize user input\n3. Use framework-specific safe methods\n4. Validate and escape data\n\n**Example:**\n\`\`\`javascript\n// ❌ Dangerous\nelement.innerHTML = userInput;\n\n// ✅ Safe\nelement.textContent = userInput;\n\`\`\``,
-        'insecure_http': `🔒 **How to Fix Insecure HTTP:**\n\n1. Always use HTTPS for external requests\n2. Update URLs to use https://\n3. Configure server to redirect HTTP to HTTPS\n4. Use HSTS headers\n\n**Example:**\n\`\`\`javascript\n// ❌ Insecure\nfetch('http://api.example.com/data');\n\n// ✅ Secure\nfetch('https://api.example.com/data');\n\`\`\``
-    };
-    
-    const guide = fixGuides[vulnerabilityType as string] || `🐺 **General Security Fix Guide:**\n\nThis vulnerability requires attention. Please:\n\n1. Review the flagged code\n2. Consider security implications\n3. Apply appropriate fixes\n4. Test thoroughly\n\nFor specific guidance, consult security best practices for your framework.`;
-    
-    vscode.window.showInformationMessage(guide, { modal: true });
-}
 
 export function deactivate() {
     console.log('🐺 VibeWolf Security Scanner: Starting deactivation...');

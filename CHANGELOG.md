@@ -1,5 +1,26 @@
 # 🐺 VibeWolf Security Scanner - Changelog
 
+## Version 1.0.3 - August 4, 2025
+
+### 🧹 **Clean Detection Focus**
+- **REMOVED**: All generic "Fix:" messages that provided misleading or incorrect advice
+- **IMPROVED**: Clean vulnerability reporting focusing on detection only
+- **ENHANCED**: Developers can now get proper fix guidance from AI tools like Windsurf
+- **SIMPLIFIED**: Cleaner terminal output, HTML reports, and hover messages
+- **PHILOSOPHY**: VibeWolf finds issues, developers (with AI help) fix them
+
+### **What's Changed:**
+- Removed generic fix recommendations from all vulnerability types
+- Cleaned up HTML report generation (no more "Fix:" lines)
+- Simplified terminal output to focus on issue identification
+- Updated hover messages to remove misleading fix suggestions
+- Maintained all core detection capabilities and accuracy
+
+### **Why This Change:**
+Generic fix messages like "Use HTTPS for all external requests" were often wrong or impossible to implement. Modern developers using AI-powered IDEs can get much better, contextual fix guidance by asking their AI assistant about the specific vulnerability VibeWolf found.
+
+---
+
 ## Version 1.0.2 - August 3, 2025
 
 ### 🎨 **HTML Report UI Overhaul**
