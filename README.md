@@ -179,7 +179,7 @@ CodeWolf is your guardian wolf - always watching, always protecting, ensuring yo
 
 If CodeWolf has saved you from a security disaster or helped protect your app, consider buying me a coffee! ☕
 
-[![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20A%20Coffee-☕-yellow.svg)](https://buymeacoffee.com/codewolf)
+[![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20A%20Coffee-☕-yellow.svg)](https://buymeacoffee.com/c0dewolf)
 
 **Every coffee helps:**
 - 🐺 Keep CodeWolf updated with new vulnerability patterns
