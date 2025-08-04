@@ -2,7 +2,7 @@
   "name": "vibewolf-security-scanner",
   "displayName": "🐺 VibeWolf Security Scanner",
   "description": "🛡️ Protect your apps from dangerous security vulnerabilities - The guardian wolf for new and seasoned developers",
-  "version": "1.0.8",
+  "version": "1.0.13",
   "publisher": "vibewolf",
   "license": "MIT",
   "repository": {
@@ -21,6 +21,28 @@
     "Linters",
     "Other"
   ],
+  "keywords": [
+    "security",
+    "vulnerability",
+    "scanner",
+    "audit",
+    "code-analysis",
+    "static-analysis",
+    "XSS",
+    "javascript",
+    "typescript",
+    "react",
+    "vue",
+    "angular",
+    "vibewolf",
+    "security-audit",
+    "code-security"
+  ],
+  "galleryBanner": {
+    "color": "#1e1e1e",
+    "theme": "dark"
+  },
+  "qna": "marketplace",
   "activationEvents": [
     "onStartupFinished"
   ],

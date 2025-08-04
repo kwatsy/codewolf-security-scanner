@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>🐺 VibeWolf Security Report</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+        
+        .wolf-logo {
+            font-size: 4rem;
+            margin-bottom: 10px;
+            animation: pulse 2s infinite;
+            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.5));
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: #ffffff;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+        }
+        
+        .header .subtitle {
+            font-size: 1.2rem;
+            color: #00ffff;
+            margin-bottom: 20px;
+            text-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
+        }
+        
+        .scan-info {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+        
+        .scan-info-item {
+            text-align: center;
+        }
+        
+        .scan-info-item .label {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 5px;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+        }
+        
+        .scan-info-item .value {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #ffffff;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+        }
+        
+        .terminal-output {
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            font-family: 'Courier New', monospace;
+        }
+        
+        .terminal-header {
+            color: #00ff00;
+            font-weight: bold;
+            margin: 5px 0;
+            font-size: 1rem;
+            text-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
+        }
+        
+        .scan-info-line {
+            color: #ffffff;
+            margin: 8px 0;
+            font-size: 1rem;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+        }
+        
+        .severity-breakdown {
+            margin: 20px 0;
+        }
+        
+        .breakdown-title {
+            color: #00ffff;
+            font-weight: bold;
+            margin: 15px 0 10px 0;
+            font-size: 1rem;
+            text-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
+        }
+        
+        .severity-line {
+            margin: 5px 0;
+            font-size: 1rem;
+            font-weight: bold;
+        }
+        
+        .severity-line.critical {
+            color: #ff4444;
+            text-shadow: 0 0 5px rgba(255, 68, 68, 0.7);
+        }
+        
+        .severity-line.high {
+            color: #ff8800;
+            text-shadow: 0 0 5px rgba(255, 136, 0, 0.7);
+        }
+        
+        .severity-line.medium {
+            color: #ffdd00;
+            text-shadow: 0 0 5px rgba(255, 221, 0, 0.7);
+        }
+        
+        .severity-line.low {
+            color: #0088ff;
+            text-shadow: 0 0 5px rgba(0, 136, 255, 0.7);
+        }
+        
+        .vulnerability-section {
+            margin: 25px 0;
+        }
+        
+        .vuln-section-header {
+            color: #ffffff;
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin: 15px 0 5px 0;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+        }
+        
+        .vuln-divider {
+            color: rgba(255, 255, 255, 0.8);
+            margin: 5px 0 15px 0;
+        }
+        
+        .vuln-item {
+            margin: 15px 0;
+            padding: 10px 0;
+        }
+        
+        .vuln-number {
+            color: #ffffff;
+            font-weight: bold;
+            margin-bottom: 5px;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+        }
+        
+        .vuln-type {
+            color: #00ff88;
+            margin: 3px 0;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+        }
+        
+        .vuln-issue {
+            color: #ffaa44;
+            margin: 3px 0;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+        }
+        
+        .vuln-code-line {
+            color: #dd88ff;
+            margin: 3px 0;
+            font-style: italic;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+        }
+        
+        .vuln-fix {
+            color: #88ff88;
+            margin: 3px 0;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+        }
+        
+        .terminal-footer {
+            margin-top: 30px;
+        }
+        
+        .terminal-line {
+            color: #ffffff;
+            margin: 8px 0;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+        }
+        
+        .terminal-divider {
+            color: #00ff00;
+            font-weight: bold;
+            margin: 10px 0;
+            text-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
+        }
+        
+        .terminal-complete {
+            color: #00ff00;
+            font-weight: bold;
+            margin: 10px 0;
+            text-shadow: 0 0 8px rgba(0, 255, 0, 0.8);
+        }
+        
+        .terminal-success {
+            color: #00ff00;
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin: 20px 0;
+            text-shadow: 0 0 8px rgba(0, 255, 0, 0.8);
+        }
+
+        
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 30px;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        
+        .footer .wolf-quote {
+            font-style: italic;
+            font-size: 1.1rem;
+            color: #ffffff;
+            margin-bottom: 15px;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+        }
+        
+        .footer .vibewolf-info {
+            color: #ffffff;
+            font-size: 0.9rem;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+        }
+        
+        .footer .vibewolf-info a {
+            color: #00ffff !important;
+            text-decoration: none !important;
+            font-weight: bold;
+            text-shadow: 0 0 5px rgba(0, 255, 255, 0.7);
+            transition: all 0.3s ease;
+        }
+        
+        .footer .vibewolf-info a:hover {
+            color: #88ffff !important;
+            text-shadow: 0 0 8px rgba(0, 255, 255, 1);
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .header {
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .scan-info {
+                gap: 15px;
+            }
+            
+            .overview-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="wolf-logo">🐺</div>
+            <h1>VibeWolf Security Report</h1>
+            <div class="subtitle">The Guardian Wolf for Developers</div>
+            <div class="scan-info">
+                <div class="scan-info-item">
+                    <div class="label">Project</div>
+                    <div class="value">{{PROJECT_NAME}}</div>
+                </div>
+                <div class="scan-info-item">
+                    <div class="label">Scan Date</div>
+                    <div class="value">{{SCAN_DATE}}</div>
+                </div>
+                <div class="scan-info-item">
+                    <div class="label">Total Issues</div>
+                    <div class="value">{{TOTAL_ISSUES}}</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="terminal-output">
+            <div class="terminal-header">🐺 ===============================================</div>
+            <div class="terminal-header">🐺 VIBEWOLF SECURITY SCANNER RESULTS</div>
+            <div class="terminal-header">🐺 ===============================================</div>
+            
+            <div class="scan-info-line">📅 Scan Date: {{SCAN_DATETIME}}</div>
+            <div class="scan-info-line">📁 Project: {{PROJECT_NAME}}</div>
+            <div class="scan-info-line">🔍 Total Vulnerabilities Found: {{TOTAL_ISSUES}}</div>
+            
+            <div class="severity-breakdown">
+                <div class="breakdown-title">📊 SEVERITY BREAKDOWN:</div>
+                <div class="severity-line critical">🔴 CRITICAL: {{CRITICAL_COUNT}}</div>
+                <div class="severity-line high">🟠 HIGH: {{HIGH_COUNT}}</div>
+                <div class="severity-line medium">🟡 MEDIUM: {{MEDIUM_COUNT}}</div>
+                <div class="severity-line low">🔵 LOW: {{LOW_COUNT}}</div>
+            </div>
+            
+            {{VULNERABILITIES_CONTENT}}
+            
+        </div>
+        
+        <div class="footer">
+            <div class="wolf-quote">"No developer should accidentally expose their secrets to the world."</div>
+            <div class="vibewolf-info">
+                <strong>VibeWolf Security Scanner v1.0.10</strong><br>
+                🎯 83% Noise Reduction • 🎛️ Interactive Management • 📊 Triple Output<br>
+                <a href="https://buymeacoffee.com/vibewolf" style="color: #667eea; text-decoration: none;">☕ Buy me a coffee</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
