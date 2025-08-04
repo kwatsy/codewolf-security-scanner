@@ -16,30 +16,30 @@ export function activate(context: vscode.ExtensionContext) {
     const scanFolderCommand = vscode.commands.registerCommand('securityScanner.scanFolder', scanFolder);
     const generateReportCommand = vscode.commands.registerCommand('securityScanner.generateReport', generateReport);
     
-    // Register VibeWolf management commands
-    const ignoreIssueCommand = vscode.commands.registerCommand('vibewolf.ignoreIssue', ignoreIssue);
-    const addToWhitelistCommand = vscode.commands.registerCommand('vibewolf.addToWhitelist', addToWhitelist);
+    // Register CodeWolf management commands
+    const ignoreIssueCommand = vscode.commands.registerCommand('codewolf.ignoreIssue', ignoreIssue);
+    const addToWhitelistCommand = vscode.commands.registerCommand('codewolf.addToWhitelist', addToWhitelist);
     
-    // Register code actions provider for VibeWolf management
+    // Register code actions provider for CodeWolf management
     const codeActionsProvider = vscode.languages.registerCodeActionsProvider('*', {
         provideCodeActions(document, range, context) {
             const actions: vscode.CodeAction[] = [];
             
-            // Check if there are VibeWolf diagnostics in this range
-            const vibeWolfDiagnostics = context.diagnostics.filter(
-                diag => diag.source === 'VibeWolf Security Scanner'
+            // Check if there are CodeWolf diagnostics in this range
+            const codeWolfDiagnostics = context.diagnostics.filter(
+                diag => diag.source === 'CodeWolf Security Scanner'
             );
             
-            if (vibeWolfDiagnostics.length > 0) {
-                const diagnostic = vibeWolfDiagnostics[0];
+            if (codeWolfDiagnostics.length > 0) {
+                const diagnostic = codeWolfDiagnostics[0];
                 
                 // Ignore this issue
                 const ignoreAction = new vscode.CodeAction(
-                    '🚫 Ignore this VibeWolf issue',
+                    '🚫 Ignore this CodeWolf issue',
                     vscode.CodeActionKind.QuickFix
                 );
                 ignoreAction.command = {
-                    command: 'vibewolf.ignoreIssue',
+                    command: 'codewolf.ignoreIssue',
                     title: 'Ignore Issue',
                     arguments: [document.uri, range, diagnostic]
                 };
@@ -47,11 +47,11 @@ export function activate(context: vscode.ExtensionContext) {
                 
                 // Add pattern to whitelist
                 const whitelistAction = new vscode.CodeAction(
-                    '➕ Add pattern to VibeWolf whitelist',
+                    '➕ Add pattern to CodeWolf whitelist',
                     vscode.CodeActionKind.QuickFix
                 );
                 whitelistAction.command = {
-                    command: 'vibewolf.addToWhitelist',
+                    command: 'codewolf.addToWhitelist',
                     title: 'Add to Whitelist',
                     arguments: [document.uri, range, diagnostic]
                 };
@@ -88,7 +88,7 @@ export function activate(context: vscode.ExtensionContext) {
         scanDocument(vscode.window.activeTextEditor.document);
     }
 
-    vscode.window.showInformationMessage('🐺 VibeWolf Security Scanner ready! Use Command Palette to scan when you\'re ready for deployment.');
+    vscode.window.showInformationMessage('🐺 CodeWolf Security Scanner ready! Use Command Palette to scan when you\'re ready for deployment.');
 }
 
 async function scanCurrentFile() {
@@ -450,10 +450,10 @@ function createDiagnostic(vulnerability: any): vscode.Diagnostic {
         severity
     );
     
-    diagnostic.source = 'VibeWolf Security Scanner';
+    diagnostic.source = 'CodeWolf Security Scanner';
     diagnostic.code = {
         value: vulnerability.vulnerabilityType,
-        target: vscode.Uri.parse(`vibewolf://manage/${vulnerability.vulnerabilityType}/${vulnerability.filePath}/${vulnerability.lineNumber}`)
+        target: vscode.Uri.parse(`codewolf://manage/${vulnerability.vulnerabilityType}/${vulnerability.filePath}/${vulnerability.lineNumber}`)
     };
     
     return diagnostic;
@@ -481,18 +481,18 @@ function onActiveEditorChange(editor: vscode.TextEditor | undefined) {
     }
 }
 
-// VibeWolf Management Functions
+// CodeWolf Management Functions
 async function ignoreIssue(uri: vscode.Uri, range: vscode.Range, diagnostic: vscode.Diagnostic) {
     const choice = await vscode.window.showQuickPick([
         '🚫 Ignore this specific instance',
         '📁 Ignore all issues in this file',
         '🎯 Ignore this issue type in entire project'
     ], {
-        placeHolder: '🐺 How would you like to ignore this VibeWolf issue?'
+        placeHolder: '🐺 How would you like to ignore this CodeWolf issue?'
     });
     
     if (choice) {
-        vscode.window.showInformationMessage(`🐺 VibeWolf: ${choice} - Feature coming in next update!`);
+        vscode.window.showInformationMessage(`🐺 CodeWolf: ${choice} - Feature coming in next update!`);
         // TODO: Implement actual ignore functionality
     }
 }
@@ -508,7 +508,7 @@ async function addToWhitelist(uri: vscode.Uri, range: vscode.Range, diagnostic: 
     });
     
     if (choice) {
-        vscode.window.showInformationMessage(`🐺 VibeWolf: ${choice} - Feature coming in next update!`);
+        vscode.window.showInformationMessage(`🐺 CodeWolf: ${choice} - Feature coming in next update!`);
         // TODO: Implement actual whitelist functionality
     }
 }
@@ -516,7 +516,7 @@ async function addToWhitelist(uri: vscode.Uri, range: vscode.Range, diagnostic: 
 
 
 export function deactivate() {
-    console.log('🐺 VibeWolf Security Scanner: Starting deactivation...');
+    console.log('🐺 CodeWolf Security Scanner: Starting deactivation...');
     
     // Clear all diagnostics first
     if (diagnosticCollection) {
@@ -560,7 +560,7 @@ export function deactivate() {
     scanner = undefined as any;
     diagnosticCollection = undefined as any;
     
-    console.log('🐺 VibeWolf Security Scanner: Deactivation complete!');
+    console.log('🐺 CodeWolf Security Scanner: Deactivation complete!');
     
     // Force garbage collection if available (helps with cleanup)
     if (global.gc) {

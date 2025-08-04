@@ -1,4 +1,4 @@
-# 🐺 VibeWolf Security Report
+# 🐺 CodeWolf Security Report
 
 > **Project:** windsurf-security-scanner  
 > **Scan Date:** 8/4/2025, 3:37:43 PM  
@@ -944,9 +944,9 @@ fetch('http://api.example.com/data')
 
 ---
 
-## 🐺 About VibeWolf
+## 🐺 About CodeWolf
 
-**VibeWolf Security Scanner** - The Guardian Wolf for Developers
+**CodeWolf Security Scanner** - The Guardian Wolf for Developers
 
 - 🎯 **83% Noise Reduction** - Only flags real security issues
 - 🎛️ **Interactive Management** - Right-click to manage issues

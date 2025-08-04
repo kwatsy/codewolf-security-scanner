@@ -83,7 +83,7 @@ export class ReportGenerator {
         
         content += `
             <div class="terminal-footer">
-                <div class="terminal-line">📄 Detailed report saved to: !VIBEWOLF-SECURITY-REPORT.md</div>
+                <div class="terminal-line">📄 Detailed report saved to: !CODEWOLF-SECURITY-REPORT.md</div>
                 <div class="terminal-line">🔧 Use this file to track your security fixes!</div>
                 <div class="terminal-divider">🐺 ===============================================</div>
                 <div class="terminal-complete">✅ SCAN COMPLETE - STAY SECURE!</div>
