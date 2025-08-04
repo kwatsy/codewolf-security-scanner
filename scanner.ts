@@ -9,14 +9,12 @@ interface Vulnerability {
     severity: string;
     description: string;
     codeSnippet: string;
-    recommendation: string;
 }
 
 interface SecurityRule {
     patterns: string[];
     severity: string;
     description: string;
-    recommendation: string;
 }
 
 export class SecurityScanner {
@@ -62,20 +60,27 @@ export class SecurityScanner {
                 ],
                 severity: 'HIGH',
                 description: 'Potential XSS vulnerability through dynamic HTML injection',
-                recommendation: 'Use textContent, createElement, or sanitize HTML input'
+
             },
 
             // Hardcoded API Keys & Secrets (refined patterns to reduce false positives)
             exposed_secrets: {
                 patterns: [
-                    // API Keys (more specific patterns)
-                    'api_key["\']?\s*[:=]\s*["\'][A-Za-z0-9]{20,}["\']',
-                    'apikey["\']?\s*[:=]\s*["\'][A-Za-z0-9]{20,}["\']',
-                    'api-key["\']?\s*[:=]\s*["\'][A-Za-z0-9]{20,}["\']',
-                    'secret["\']?\s*[:=]\s*["\'][A-Za-z0-9]{20,}["\']',
-                    'token["\']?\s*[:=]\s*["\'][A-Za-z0-9]{20,}["\']',
-                    'access_token["\']?\s*[:=]\s*["\'][A-Za-z0-9]{20,}["\']',
-                    'auth_token["\']?\s*[:=]\s*["\'][A-Za-z0-9]{20,}["\']',
+                    // API Keys (comprehensive patterns)
+                    'api_?key["\']?\s*[:=]\s*["\'][A-Za-z0-9_\-]{15,}["\']',
+                    'apikey["\']?\s*[:=]\s*["\'][A-Za-z0-9_\-]{15,}["\']',
+                    'api-key["\']?\s*[:=]\s*["\'][A-Za-z0-9_\-]{15,}["\']',
+                    'secret["\']?\s*[:=]\s*["\'][A-Za-z0-9_\-]{15,}["\']',
+                    'token["\']?\s*[:=]\s*["\'][A-Za-z0-9_\-]{15,}["\']',
+                    'access_token["\']?\s*[:=]\s*["\'][A-Za-z0-9_\-]{15,}["\']',
+                    'auth_token["\']?\s*[:=]\s*["\'][A-Za-z0-9_\-]{15,}["\']',
+                    
+                    // Generic key patterns (catch more formats)
+                    '["\']?[A-Za-z0-9_\-]{32,}["\']?\s*//.*(?:key|secret|token|api)',
+                    '(?:key|secret|token|api)["\']?\s*[:=]\s*["\'][A-Za-z0-9_\-]{15,}["\']',
+                    
+                    // Firebase API keys (specific pattern)
+                    'AIza[0-9A-Za-z\-_]{35}',
                     
                     // Passwords & Credentials (avoid React patterns)
                     'password["\']?\s*[:=]\s*["\'][A-Za-z0-9]{8,}["\']',
@@ -113,37 +118,68 @@ export class SecurityScanner {
                 ],
                 severity: 'CRITICAL',
                 description: 'Hardcoded secrets, credentials, or sensitive data exposed in frontend code',
-                recommendation: 'Move all secrets to server-side, use environment variables, or secure credential management'
+
             },
 
-            // Firebase Security Issues
+            // Firebase Security Issues (Context-Aware Detection)
             firebase_security: {
                 patterns: [
+                    // Firebase Security Rules issues (CRITICAL)
                     'allow read, write: if true',
                     'allow.*if.*true',
-                    'functions\\.https\\.onRequest\\(\\s*\\(',
-                    'admin\\.initializeApp\\(\\).*apiKey',
-                    'firebase\\.initializeApp\\(.*apiKey.*\\)',
-                    'AIza[0-9A-Za-z\\-_]{35}'
+                    
+                    // Server-side Firebase keys in client code (CRITICAL)
+                    'admin\.initializeApp\(\).*apiKey',
+                    'firebase-admin.*apiKey',
+                    'serviceAccountKey',
+                    
+                    // Firebase web API keys (MEDIUM - context-aware)
+                    'apiKey:\s*["\']AIza[0-9A-Za-z\-_]{35}["\']',
+                    
+                    // Insecure Cloud Functions (HIGH)
+                    'functions\.https\.onRequest\\(',
+                    'cors.*origin.*\\*'
+                ],
+                severity: 'MEDIUM', // Changed from CRITICAL - Firebase web keys are designed to be public
+                description: 'Firebase configuration should use environment variables for better security practices',
+
+            },
+            
+            // Firebase Critical Security Issues (separate rule for truly critical issues)
+            firebase_critical: {
+                patterns: [
+                    // Server-side keys that should NEVER be in client code
+                    'firebase-admin.*private_key',
+                    'serviceAccountKey.*private_key',
+                    'admin\.initializeApp\(.*private_key\)',
+                    
+                    // Dangerous Firebase Security Rules
+                    'allow read, write: if true',
+                    'allow.*if.*true.*firestore',
+                    'allow.*if.*request\.auth == null'
                 ],
                 severity: 'CRITICAL',
-                description: 'Insecure Firebase configuration detected',
-                recommendation: 'Implement proper authentication and security rules'
+                description: 'Critical Firebase security vulnerability - server credentials or insecure rules detected',
+
             },
 
-            // Unsafe eval() usage (refined to avoid Firebase function calls)
+            // Unsafe eval() usage (improved Firebase Functions exclusion)
             unsafe_eval: {
                 patterns: [
+                    // Actual dangerous eval patterns
                     '\\beval\\s*\\(',
                     '\\bnew\\s+Function\\s*\\(',
+                    
+                    // String-based setTimeout/setInterval (dangerous)
                     'setTimeout\\s*\\(\\s*["\'][^"\']',
                     'setInterval\\s*\\(\\s*["\'][^"\']',
-                    // Exclude Firebase function calls
-                    '(?<!\\w)Function\\s*\\((?!.*Function\\s*\\(\\s*\\{)'
+                    
+                    // Generic Function constructor (simplified pattern)
+                    '\\bnew\\s+Function\\s*\\('
                 ],
                 severity: 'HIGH',
                 description: 'Unsafe code execution detected',
-                recommendation: 'Avoid eval() and string-based code execution'
+
             },
 
             // Insecure HTTP requests
@@ -156,7 +192,7 @@ export class SecurityScanner {
                 ],
                 severity: 'MEDIUM',
                 description: 'Insecure HTTP requests detected',
-                recommendation: 'Use HTTPS for all external requests'
+
             },
 
             // Cryptographic weaknesses
@@ -170,7 +206,7 @@ export class SecurityScanner {
                 ],
                 severity: 'HIGH',
                 description: 'Weak cryptographic algorithm detected',
-                recommendation: 'Use SHA-256, SHA-3, or other modern cryptographic algorithms'
+
             },
 
             // Timing attacks
@@ -184,7 +220,7 @@ export class SecurityScanner {
                 ],
                 severity: 'MEDIUM',
                 description: 'Potential timing attack vulnerability in string comparison',
-                recommendation: 'Use constant-time comparison functions for sensitive data'
+
             },
 
             // Local storage issues
@@ -200,7 +236,7 @@ export class SecurityScanner {
                 ],
                 severity: 'HIGH',
                 description: 'Sensitive data stored insecurely in browser storage',
-                recommendation: 'Use secure, httpOnly cookies or avoid storing sensitive data client-side'
+
             },
 
             // SQL Injection vulnerabilities
@@ -217,7 +253,7 @@ export class SecurityScanner {
                 ],
                 severity: 'CRITICAL',
                 description: 'Potential SQL injection vulnerability detected',
-                recommendation: 'Use parameterized queries or prepared statements instead of string concatenation'
+
             },
 
             // CORS issues
@@ -230,7 +266,7 @@ export class SecurityScanner {
                 ],
                 severity: 'HIGH',
                 description: 'Insecure CORS configuration detected',
-                recommendation: 'Specify exact origins instead of wildcards, especially with credentials'
+
             }
         };
     }
@@ -245,6 +281,7 @@ export class SecurityScanner {
             xss_vulnerabilities: true,
             exposed_secrets: true,
             firebase_security: true,
+            firebase_critical: true,
             unsafe_eval: true,
             insecure_http: true,
             weak_crypto: true,
@@ -281,8 +318,7 @@ export class SecurityScanner {
                             vulnerabilityType: vulnType,
                             severity: rule.severity,
                             description: rule.description,
-                            codeSnippet: line.trim(),
-                            recommendation: rule.recommendation
+                            codeSnippet: line.trim()
                         });
                         break; // Avoid duplicate matches on same line
                     }
@@ -752,7 +788,7 @@ export class SecurityScanner {
                                                 <div class="vuln-type">   Type: ${vuln.vulnerabilityType.replace(/_/g, ' ')}</div>
                                                 <div class="vuln-issue">   Issue: ${vuln.description}</div>
                                                 <div class="vuln-code-line">   Code: ${vuln.codeSnippet.trim()}</div>
-                                                <div class="vuln-fix">   Fix: ${vuln.recommendation}</div>
+
                                             </div>
                                         `;
                                     }).join('')}
@@ -775,7 +811,7 @@ export class SecurityScanner {
                     <div class="vibewolf-info">
                         <strong>VibeWolf Security Scanner v1.0.0</strong><br>
                         🎯 83% Noise Reduction • 🎛️ Interactive Management • 📊 Triple Output<br>
-                        <a href="https://buymeacoffee.com/watsy" style="color: #667eea; text-decoration: none;">☕ Buy me a coffee</a>
+                        <a href="https://buymeacoffee.com/vibewolf" style="color: #667eea; text-decoration: none;">☕ Buy me a coffee</a>
                     </div>
                 </div>
             </div>
