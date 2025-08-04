@@ -4,9 +4,9 @@
 
 ## 🎆 **Mission**
 
-VibeWolf protects "Vibe Code" developers and seasoned developers from the dangerous implications of publishing apps with exposed APIs, hardcoded secrets, and security vulnerabilities to app stores. 
+CodeWolf protects "Vibe Code" developers and seasoned developers from the dangerous implications of publishing apps with exposed APIs, hardcoded secrets, and security vulnerabilities to app stores. 
 
-**VibeWolf is designed to be used BEFORE backend migration and app store deployment - not during active development!**
+**CodeWolf is designed to be used BEFORE backend migration and app store deployment - not during active development!**
 
 📝 **Developer-Friendly Approach:**
 - ✅ **Silent during development** - No annoying real-time warnings
@@ -14,7 +14,7 @@ VibeWolf protects "Vibe Code" developers and seasoned developers from the danger
 - ✅ **Pre-deployment focus** - Perfect for final security audits
 - ✅ **App store preparation** - Catch issues before submission
 
-## ⚡ **What VibeWolf Catches**
+## ⚡ **What CodeWolf Catches**
 
 ### 🔴 **Critical Threats:**
 - **Hardcoded API Keys** - Exposed Firebase, Google Maps, payment keys
@@ -50,17 +50,17 @@ VibeWolf protects "Vibe Code" developers and seasoned developers from the danger
 - ✅ **First-of-its-kind** - World's first security scanner with built-in AI remediation
 
 ### 🎛️ **Interactive Issue Management:**
-- ✅ **Right-click dropdowns** - Manage any VibeWolf issue directly in Problems tab
+- ✅ **Right-click dropdowns** - Manage any CodeWolf issue directly in Problems tab
 - ✅ **Smart ignore options** - This instance, this file, or project-wide
 - ✅ **Whitelist patterns** - Add similar patterns to prevent future flags
 - ✅ **Detailed fix guides** - Step-by-Step security remediation instructions
-- ✅ **False positive reporting** - Help improve VibeWolf detection
+- ✅ **False positive reporting** - Help improve CodeWolf detection
 
 ### 📊 **Triple Output System:**
 - ✅ **Visual Problems panel** - Red/yellow squiggly lines with hover details
-- ✅ **Terminal output** - Professional VibeWolf-branded scan results
+- ✅ **Terminal output** - Professional CodeWolf-branded scan results
 - ✅ **Beautiful HTML reports** - Modern dark terminal theme with glassmorphism effects
-- ✅ **Markdown reports** - Auto-generated `!VIBEWOLF-SECURITY-REPORT.md`
+- ✅ **Markdown reports** - Auto-generated `!CODEWOLF-SECURITY-REPORT.md`
 - ✅ **Top-visible files** - Reports appear at top of file explorer
 
 ### 🎯 **Configurable Vulnerability Detection:**
@@ -77,14 +77,14 @@ VibeWolf protects "Vibe Code" developers and seasoned developers from the danger
 - 🔧 **Improved UX** - Better visual hierarchy and enhanced Buy Me A Coffee visibility
 
 ### **Command Palette:**
-- `🐺 VibeWolf: Scan Current File`
-- `🐺 VibeWolf: Scan Entire Workspace` 
-- `🐺 VibeWolf: Scan Selected Folder`
-- `🐺 VibeWolf: Generate Security Report`
+- `🐺 CodeWolf: Scan Current File`
+- `🐺 CodeWolf: Scan Entire Workspace` 
+- `🐺 CodeWolf: Scan Selected Folder`
+- `🐺 CodeWolf: Generate Security Report`
 
 ### **Security Panel:**
 ```
-🐺 VibeWolf Security Issues (12)
+🐺 CodeWolf Security Issues (12)
 ├── 📁 src/components/Login.jsx (3)
 │   ├── 🔴 Line 23: Hardcoded API key detected
 │   ├── 🟠 Line 45: XSS vulnerability in innerHTML
@@ -110,16 +110,16 @@ VibeWolf protects "Vibe Code" developers and seasoned developers from the danger
 
 ## 📅 **Recommended Workflow**
 
-### **🟢 During Development (VibeWolf Silent):**
+### **🟢 During Development (CodeWolf Silent):**
 1. **Code freely** with APIs, passwords, and test data
 2. **Focus on functionality** without security interruptions
 3. **Use hardcoded values** for rapid prototyping
-4. **VibeWolf stays quiet** - no annoying warnings!
+4. **CodeWolf stays quiet** - no annoying warnings!
 
-### **🟡 Pre-Deployment Phase (Activate VibeWolf):**
+### **🟡 Pre-Deployment Phase (Activate CodeWolf):**
 1. **Ready for backend migration?** Time to scan!
-2. **Run:** `🐺 VibeWolf: Scan Entire Workspace`
-3. **Review security issues** found by VibeWolf
+2. **Run:** `🐺 CodeWolf: Scan Entire Workspace`
+3. **Review security issues** found by CodeWolf
 4. **Fix critical issues** before moving secrets to backend
 
 ### **🔴 App Store Preparation (Final Scan):**
@@ -129,7 +129,7 @@ VibeWolf protects "Vibe Code" developers and seasoned developers from the danger
 4. **Verify no secrets** remain in frontend code
 5. **Deploy with confidence** to app stores!
 
-## 🛡️ **Why VibeWolf Matters**
+## 🛡️ **Why CodeWolf Matters**
 
 **Real Example from Testing:**
 ```javascript
@@ -139,7 +139,7 @@ const firebaseConfig = {
 };
 ```
 
-**VibeWolf immediately warns:**
+**CodeWolf immediately warns:**
 - 🔴 **Critical:** Hardcoded secrets exposed in frontend code
 - 💡 **Fix:** Move secrets to server-side or use environment variables
 
@@ -167,22 +167,22 @@ const firebaseConfig = {
 
 3. **Start protecting your code!** 🐺⚡
 
-## 🌟 **The VibeWolf Promise**
+## 🌟 **The CodeWolf Promise**
 
 **"No developer should accidentally expose their secrets to the world."**
 
-VibeWolf is your guardian wolf - always watching, always protecting, ensuring your apps are secure before they reach millions of users.
+CodeWolf is your guardian wolf - always watching, always protecting, ensuring your apps are secure before they reach millions of users.
 
-## ☕ **Support VibeWolf**
+## ☕ **Support CodeWolf**
 
-**VibeWolf is completely FREE** and always will be! 🎉
+**CodeWolf is completely FREE** and always will be! 🎉
 
-If VibeWolf has saved you from a security disaster or helped protect your app, consider buying me a coffee! ☕
+If CodeWolf has saved you from a security disaster or helped protect your app, consider buying me a coffee! ☕
 
-[![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20A%20Coffee-☕-yellow.svg)](https://buymeacoffee.com/vibewolf)
+[![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20A%20Coffee-☕-yellow.svg)](https://buymeacoffee.com/codewolf)
 
 **Every coffee helps:**
-- 🐺 Keep VibeWolf updated with new vulnerability patterns
+- 🐺 Keep CodeWolf updated with new vulnerability patterns
 - 🛡️ Add support for more frameworks and languages  
 - ⚡ Improve scanning performance and accuracy
 - 📚 Create more security education content
@@ -193,11 +193,11 @@ If VibeWolf has saved you from a security disaster or helped protect your app, c
 
 ## 📜 **License**
 
-**MIT License** - Use VibeWolf freely in personal and commercial projects!
+**MIT License** - Use CodeWolf freely in personal and commercial projects!
 
 ---
 
-**Built with ❤️ for the "Vibe Coder" Developer Community**  
+**Built with ❤️ for the Developer Community**  
 **Protect. Secure. Ship with confidence.** 🐺🛡️
 
 *"No developer should accidentally expose their secrets to the world."*
