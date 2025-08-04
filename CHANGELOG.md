@@ -1,7 +1,6 @@
 # 🐺 VibeWolf Security Scanner - Changelog
-<!-- Updated: August 4, 2025 -->
 
-## Version 1.0.8 - August 4, 2025
+## Version 1.0.13 - August 4, 2025
 
 ### 🤖 **AI Integration Revolution**
 - **NEW**: "Send to Cascade" functionality - Direct AI integration for instant security fix recommendations
