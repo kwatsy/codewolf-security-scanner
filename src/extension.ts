@@ -108,7 +108,7 @@ async function scanCurrentFile() {
         await outputScanResults(vulnerabilities);
         
         vscode.window.showInformationMessage(
-            `✅ File scan completed: ${vulnerabilities.length} vulnerabilities found. Check terminal and !VIBEWOLF-SECURITY-REPORT.md for details.`
+            `✅ File scan completed: ${vulnerabilities.length} vulnerabilities found. Check terminal and !CODEWOLF-SECURITY-REPORT.md for details.`
         );
     } catch (error) {
         vscode.window.showErrorMessage(`❌ File scan failed: ${error}`);
@@ -163,7 +163,7 @@ async function scanWorkspace() {
             await outputScanResults(vulnerabilities);
             
             vscode.window.showInformationMessage(
-                `✅ Workspace scan completed: ${vulnerabilities.length} vulnerabilities found. Check terminal and !VIBEWOLF-SECURITY-REPORT.md for details.`
+                `✅ Workspace scan completed: ${vulnerabilities.length} vulnerabilities found. Check terminal and !CODEWOLF-SECURITY-REPORT.md for details.`
             );
         } catch (error) {
             vscode.window.showErrorMessage(`❌ Scan failed: ${error}`);
@@ -200,7 +200,7 @@ async function scanFolder(uri: vscode.Uri) {
             await outputScanResults(vulnerabilities);
             
             vscode.window.showInformationMessage(
-                `✅ Folder scan completed: ${vulnerabilities.length} vulnerabilities found. Check terminal and !VIBEWOLF-SECURITY-REPORT.md for details.`
+                `✅ Folder scan completed: ${vulnerabilities.length} vulnerabilities found. Check terminal and !CODEWOLF-SECURITY-REPORT.md for details.`
             );
         } catch (error) {
             vscode.window.showErrorMessage(`❌ Folder scan failed: ${error}`);
@@ -328,9 +328,9 @@ async function outputScanResults(vulnerabilities: any[]) {
     // Create beautiful markdown file
     const fs = require('fs');
     const path = require('path');
-    const reportPath = path.join(workspaceRoot, '!VIBEWOLF-SECURITY-REPORT.md');
+    const reportPath = path.join(workspaceRoot, '!CODEWOLF-SECURITY-REPORT.md');
     
-    let markdownContent = `# 🐺 VibeWolf Security Report\n\n`;
+    let markdownContent = `# 🐺 CodeWolf Security Report\n\n`;
     markdownContent += `> **Project:** ${workspaceName}  \n`;
     markdownContent += `> **Scan Date:** ${new Date().toLocaleString()}  \n`;
     markdownContent += `> **Guardian Wolf Status:** ${vulnerabilities.length === 0 ? '✅ All Clear!' : `🛡️ ${vulnerabilities.length} Issues Found`}\n\n`;
