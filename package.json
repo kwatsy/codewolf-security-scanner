@@ -2,7 +2,7 @@
   "name": "codewolf-security-scanner",
   "displayName": "🐺 CodeWolf Security Scanner",
   "description": "🛡️ Protect your apps from dangerous security vulnerabilities - The guardian wolf for new and seasoned developers",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "publisher": "codewolf",
   "license": "MIT",
   "repository": {
@@ -54,26 +54,26 @@
     "commands": [
       {
         "command": "securityScanner.scanFile",
-        "title": "🐺 VibeWolf: Scan Current File"
+        "title": "🐺 CodeWolf: Scan Current File"
       },
       {
         "command": "securityScanner.scanWorkspace",
-        "title": "🐺 VibeWolf: Scan Entire Workspace"
+        "title": "🐺 CodeWolf: Scan Entire Workspace"
       },
       {
         "command": "securityScanner.scanFolder",
-        "title": "🐺 VibeWolf: Scan Selected Folder"
+        "title": "🐺 CodeWolf: Scan Selected Folder"
       },
       {
         "command": "securityScanner.generateReport",
-        "title": "🐺 VibeWolf: Generate Security Report"
+        "title": "🐺 CodeWolf: Generate Security Report"
       }
     ],
     "views": {
       "explorer": [
         {
           "id": "securityScanner",
-          "name": "🐺 VibeWolf Security Issues",
+          "name": "🐺 CodeWolf Security Issues",
           "when": "securityScanner.hasIssues",
           "icon": "$(shield)"
         }
@@ -168,7 +168,12 @@
             "dist/**",
             "build/**",
             ".next/**",
-            "coverage/**"
+            "coverage/**",
+            "src/rules/**",
+            "out/rules/**",
+            "test-extension.js",
+            "security-report.html",
+            "create-*.js"
           ],
           "description": "File patterns to exclude from scanning"
         }
