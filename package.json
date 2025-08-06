@@ -2,7 +2,7 @@
   "name": "codewolf-security-scanner",
   "displayName": "🐺 CodeWolf Security Scanner",
   "description": "🛡️ Protect your apps from dangerous security vulnerabilities - The guardian wolf for new and seasoned developers",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "publisher": "codewolf",
   "license": "MIT",
   "repository": {
