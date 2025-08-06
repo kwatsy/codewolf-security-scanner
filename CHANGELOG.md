@@ -1,5 +1,15 @@
 # 🐺 CodeWolf Security Scanner - Changelog
 
+## Version 2.0.1 - August 6, 2025
+
+### 🐛 **Bug Fixes & Improvements**
+- **FOOTER ENHANCEMENT**: Added "Brought to you by 4WaveLabs" attribution link in HTML reports
+- **BRANDING**: Enhanced footer with proper 4WaveLabs website link (https://4wavelabs.com)
+- **UI POLISH**: Minor styling improvements for better visual consistency
+- **MAINTENANCE**: General bug fixes and stability improvements
+
+---
+
 ## Version 2.0.0 - August 5, 2025
 
 ### 🎆 **MAJOR REBRAND: VibeWolf → CodeWolf**
