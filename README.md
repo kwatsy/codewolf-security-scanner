@@ -1,4 +1,4 @@
-\# 🐺 CodeWolf Security Scanner
+# 🐺 CodeWolf Security Scanner
 
 **The Guardian Wolf for Developers** 🛡️
 
@@ -177,9 +177,9 @@ CodeWolf is your guardian wolf - always watching, always protecting, ensuring yo
 
 **CodeWolf is completely FREE** and always will be! 🎉
 
-If CodeWolf has saved you from a security disaster or helped protect your app, consider buying me a coffee! ☕
+If CodeWolf has saved you from a security disaster or helped protect your app, consider supporting the project! ☕
 
-[![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20A%20Coffee-☕-yellow.svg)](https://ko-fi.com/watsy)
+[![Ko-fi](https://img.shields.io/badge/Ko--fi-☕-orange.svg)](https://ko-fi.com/watsy)
 
 **Every coffee helps:**
 - 🐺 Keep CodeWolf updated with new vulnerability patterns
@@ -191,13 +191,21 @@ If CodeWolf has saved you from a security disaster or helped protect your app, c
 
 ---
 
+## 🌊 **Created by 4WaveLabs**
+
+**CodeWolf Security Scanner** is proudly brought to you by **[4WaveLabs](https://4wavelabs.com)** 🌊
+
+**4WaveLabs** - *Innovative development solutions and security tools for the modern developer ecosystem.*
+
+---
+
 ## 📜 **License**
 
 **MIT License** - Use CodeWolf freely in personal and commercial projects!
 
 ---
 
-**Built with ❤️ for the Developer Community**  
+**Built with ❤️ for the "Vibe Coder" Developer Community**  
 **Protect. Secure. Ship with confidence.** 🐺🛡️
 
 *"No developer should accidentally expose their secrets to the world."*
